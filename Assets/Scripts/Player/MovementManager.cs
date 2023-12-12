@@ -8,7 +8,6 @@ public class MovementManager : MonoBehaviour
     public float speed;
     public float dashForce;
     public float dashDuration;
-    public float dashRecover;
     private float xInput;
     private float yInput;
     private Rigidbody2D playerRb;
@@ -59,7 +58,7 @@ public class MovementManager : MonoBehaviour
 
     private IEnumerator RestoreDash()
     {
-        yield return new WaitForSeconds(dashRecover);
+        yield return new WaitForSeconds(AttributeManager.Instance.dashRecover);
         canDash = true;
     }
 

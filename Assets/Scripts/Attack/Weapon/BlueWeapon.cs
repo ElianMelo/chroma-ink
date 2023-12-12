@@ -29,8 +29,9 @@ public class BlueWeapon : Weapon
         return canAttack;
     }
 
-    public void AllowAttack()
+    public IEnumerator AllowAttack()
     {
+        yield return new WaitForSeconds(AttributeManager.Instance.blueAttackDelay);
         canAttack = true;
     }
 
@@ -41,8 +42,11 @@ public class BlueWeapon : Weapon
 
     public override void PermformAttack(Pencil pencil)
     {
-        StartCoroutine(PerformAttackCoroutine());
-        pencil.PerformBlueAttack();
+        if (canAttack)
+        {
+            StartCoroutine(PerformAttackCoroutine());
+            pencil.PerformBlueAttack();
+        }
     }
 
     public IEnumerator PerformAttackCoroutine()
@@ -51,7 +55,7 @@ public class BlueWeapon : Weapon
         DisableAttack();
         EnableCollision();
         yield return DisableColission();
-        AllowAttack();
+        yield return AllowAttack();
         yield return null;
     }
 }

@@ -3,8 +3,7 @@ using UnityEngine;
 
 public class YellowSkill : Skill
 {
-    public float disableDelay = 0.2f;
-
+    private bool canPerform = true;
     private MovementManager movementManager;
 
     private void Awake()
@@ -14,8 +13,15 @@ public class YellowSkill : Skill
 
     public IEnumerator DisableEffect()
     {
-        yield return new WaitForSeconds(disableDelay);
+        yield return new WaitForSeconds(AttributeManager.Instance.yellowSkillDuration);
         movementManager.speed /= 2f;
+    }
+
+    public IEnumerator ApplyDelay()
+    {
+        WeaponsCDUI.Instance.yellowSkillCd = AttributeManager.Instance.yellowSkillDelay;
+        yield return new WaitForSeconds(AttributeManager.Instance.yellowSkillDelay);
+        canPerform = true;
     }
 
     public void EnableEffect()
@@ -25,14 +31,20 @@ public class YellowSkill : Skill
 
     public override void PermformSkill(Pencil pencil)
     {
-        StartCoroutine(PerformAttackCoroutine());
-        pencil.PerformYellowSkill();
+        if(canPerform)
+        {
+            StartCoroutine(PerformAttackCoroutine());
+            pencil.PerformYellowSkill();
+            WeaponsCDUI.Instance.yellowSkillCd = AttributeManager.Instance.yellowSkillDuration;
+        }
     }
 
     public IEnumerator PerformAttackCoroutine()
     {
+        canPerform = false;
         EnableEffect();
         yield return DisableEffect();
+        yield return ApplyDelay();
         yield return null;
     }
 }

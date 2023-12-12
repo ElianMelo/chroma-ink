@@ -26,13 +26,9 @@ public class BlueSkill : Skill
         hitCollider.SetActive(false);
     }
 
-    public bool CanAttack()
+    public IEnumerator AllowAttack()
     {
-        return canAttack;
-    }
-
-    public void AllowAttack()
-    {
+        yield return new WaitForSeconds(AttributeManager.Instance.blueSkillDelay);
         canAttack = true;
     }
 
@@ -43,8 +39,11 @@ public class BlueSkill : Skill
 
     public override void PermformSkill(Pencil pencil)
     {
-        StartCoroutine(PerformAttackCoroutine());
-        pencil.PerformBlueSkill();
+        if (canAttack)
+        {
+            StartCoroutine(PerformAttackCoroutine());
+            pencil.PerformBlueSkill();
+        }
     }
 
     public IEnumerator PerformAttackCoroutine()
@@ -54,7 +53,8 @@ public class BlueSkill : Skill
         DisableAttack();
         EnableCollision();
         yield return DisableColission();
-        AllowAttack();
+        WeaponsCDUI.Instance.blueSkillCd = AttributeManager.Instance.blueSkillDelay;
+        yield return AllowAttack();
         yield return null;
     }
 }

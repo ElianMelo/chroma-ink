@@ -25,13 +25,9 @@ public class RedWeapon : Weapon
         hitCollider.SetActive(false);
     }
 
-    public bool CanAttack()
+    public IEnumerator AllowAttack()
     {
-        return canAttack;
-    }
-
-    public void AllowAttack()
-    {
+        yield return new WaitForSeconds(AttributeManager.Instance.redAttackDelay);
         canAttack = true;
     }
 
@@ -42,8 +38,11 @@ public class RedWeapon : Weapon
 
     public override void PermformAttack(Pencil pencil)
     {
-        StartCoroutine(PerformAttackCoroutine());
-        pencil.PerformRedAttack();
+        if(canAttack)
+        {
+            StartCoroutine(PerformAttackCoroutine());
+            pencil.PerformRedAttack();
+        }
     }
 
     public IEnumerator PerformAttackCoroutine()
@@ -52,7 +51,7 @@ public class RedWeapon : Weapon
         DisableAttack();
         EnableCollision();
         yield return DisableColission();
-        AllowAttack();
+        yield return AllowAttack();
         yield return null;
     }
 }

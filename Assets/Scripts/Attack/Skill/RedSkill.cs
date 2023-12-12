@@ -26,13 +26,9 @@ public class RedSkill : Skill
         hitCollider.SetActive(false);
     }
 
-    public bool CanAttack()
+    public IEnumerator AllowAttack()
     {
-        return canAttack;
-    }
-
-    public void AllowAttack()
-    {
+        yield return new WaitForSeconds(AttributeManager.Instance.redSkillDelay);
         canAttack = true;
     }
 
@@ -43,8 +39,11 @@ public class RedSkill : Skill
 
     public override void PermformSkill(Pencil pencil)
     {
-        StartCoroutine(PerformAttackCoroutine());
-        pencil.PerformRedSkill();
+        if (canAttack)
+        {
+            StartCoroutine(PerformAttackCoroutine());
+            pencil.PerformRedSkill();
+        }
     }
 
     public IEnumerator PerformAttackCoroutine()
@@ -54,7 +53,8 @@ public class RedSkill : Skill
         DisableAttack();
         EnableCollision();
         yield return DisableColission();
-        AllowAttack();
+        WeaponsCDUI.Instance.redSkillCd = AttributeManager.Instance.redSkillDelay;
+        yield return AllowAttack();
         yield return null;
     }
 }
