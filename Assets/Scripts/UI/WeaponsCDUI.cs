@@ -2,14 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class WeaponsCDUI : MonoBehaviour
 {
     public static WeaponsCDUI Instance;
 
-    public Text redSkill;
-    public Text blueSkill;
-    public Text yellowSkill;
+    public TextMeshProUGUI redSkill;
+    public TextMeshProUGUI blueSkill;
+    public TextMeshProUGUI yellowSkill;
 
     public float redSkillCd = 0f;
     public float blueSkillCd = 0f;

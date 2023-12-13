@@ -4,8 +4,10 @@ using UnityEngine;
 public class BlueWeapon : Weapon
 {
     public GameObject hitCollider;
+    public GameObject blueVisual;
     public float disableDelay = 0.2f;
     private bool canAttack = true;
+    private Pencil pencil;
 
     public void SwordTurn()
     {
@@ -42,6 +44,7 @@ public class BlueWeapon : Weapon
 
     public override void PermformAttack(Pencil pencil)
     {
+        this.pencil = pencil;
         if (canAttack)
         {
             StartCoroutine(PerformAttackCoroutine());
@@ -54,8 +57,10 @@ public class BlueWeapon : Weapon
         SwordTurn();
         DisableAttack();
         EnableCollision();
-        yield return DisableColission();
-        yield return AllowAttack();
+        var entity = Instantiate(blueVisual, pencil.transform.position, transform.rotation);
+        Destroy(entity, 2);
+        StartCoroutine(DisableColission());
+        StartCoroutine(AllowAttack());
         yield return null;
     }
 }

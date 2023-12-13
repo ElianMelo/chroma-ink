@@ -5,6 +5,7 @@ using UnityEngine;
 public class RedSkill : Skill
 {
     public GameObject hitCollider;
+    public GameObject redVisual;
     public float startDelay = 0.1f;
     public float disableDelay = 0.2f;
     private bool canAttack = true;
@@ -52,6 +53,8 @@ public class RedSkill : Skill
         SwordTurn();
         DisableAttack();
         EnableCollision();
+        var entity = Instantiate(redVisual, this.transform.position, transform.rotation);
+        Destroy(entity, 2);
         yield return DisableColission();
         WeaponsCDUI.Instance.redSkillCd = AttributeManager.Instance.redSkillDelay;
         yield return AllowAttack();

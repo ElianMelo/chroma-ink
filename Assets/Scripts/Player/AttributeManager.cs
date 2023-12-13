@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class AttributeManager : MonoBehaviour
 {
-    public static AttributeManager Instance;
+    public static AttributeManager Instance;    
 
     [Header("Player")]
     public float health;
@@ -32,5 +32,58 @@ public class AttributeManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+    }
+
+    public void ChangeTypeByQuantity(AttritubeType type, float quantity)
+    {
+        quantity /= 100;
+        switch (type)
+        {
+            case AttritubeType.Health:
+                AttributeManager.Instance.health *= quantity;
+                break;
+            case AttritubeType.MoveSpeed:
+                AttributeManager.Instance.moveSpeed *= quantity;
+                break;
+            case AttritubeType.DashRecover:
+                AttributeManager.Instance.dashRecover *= quantity;
+                break;
+            case AttritubeType.RedAttackDelay:
+                AttributeManager.Instance.redAttackDelay *= quantity;
+                break;
+            case AttritubeType.RedSkillDelay:
+                AttributeManager.Instance.redSkillDelay *= quantity;
+                break;
+            case AttritubeType.RedAttackDamage:
+                AttributeManager.Instance.redAttackDamage *= quantity;
+                break;
+            case AttritubeType.RedSkillDamage:
+                AttributeManager.Instance.redSkillDamage *= quantity;
+                break;
+            case AttritubeType.BlueAttackDelay:
+                AttributeManager.Instance.blueAttackDelay *= quantity;
+                break;
+            case AttritubeType.BlueSkillDelay:
+                AttributeManager.Instance.blueSkillDelay *= quantity;
+                break;
+            case AttritubeType.BlueAttackDamage:
+                AttributeManager.Instance.blueAttackDamage *= quantity;
+                break;
+            case AttritubeType.BlueSkillDamage:
+                AttributeManager.Instance.blueSkillDamage *= quantity;
+                break;
+            case AttritubeType.YellowAttackDelay:
+                AttributeManager.Instance.yellowAttackDelay *= quantity;
+                break;
+            case AttritubeType.YellowSkillDuration:
+                AttributeManager.Instance.yellowSkillDuration *= quantity;
+                break;
+            case AttritubeType.YellowSkillDelay:
+                AttributeManager.Instance.yellowSkillDelay *= quantity;
+                break;
+            case AttritubeType.YellowAttackDamage:
+                AttributeManager.Instance.yellowAttackDamage *= quantity;
+                break;
+        }
     }
 }

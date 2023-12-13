@@ -1,12 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml;
 using UnityEngine;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class RedWeapon : Weapon
 {
     public GameObject hitCollider;
+    public GameObject redVisual;
     public float disableDelay = 0.2f;
     private bool canAttack = true;
+    private Pencil pencil;
 
     public void SwordTurn()
     {
@@ -38,7 +42,8 @@ public class RedWeapon : Weapon
 
     public override void PermformAttack(Pencil pencil)
     {
-        if(canAttack)
+        this.pencil = pencil;
+        if (canAttack)
         {
             StartCoroutine(PerformAttackCoroutine());
             pencil.PerformRedAttack();
@@ -47,11 +52,13 @@ public class RedWeapon : Weapon
 
     public IEnumerator PerformAttackCoroutine()
     {
-        SwordTurn();
         DisableAttack();
+        SwordTurn();
         EnableCollision();
-        yield return DisableColission();
-        yield return AllowAttack();
+        var entity = Instantiate(redVisual, pencil.transform.position, transform.rotation);
+        Destroy(entity, 2);
+        StartCoroutine(DisableColission());
+        StartCoroutine(AllowAttack());
         yield return null;
     }
 }
