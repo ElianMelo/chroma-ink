@@ -44,6 +44,9 @@ public class AttributeManager : MonoBehaviour
     public float purpleEffectDuration;
     public float greenEffectPercentage;
 
+    [Header("Flowers")]
+    public float flowerRespawnRate;
+
     private void Awake()
     {
         Instance = this;

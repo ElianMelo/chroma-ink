@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class YellowFlower : MonoBehaviour
+public class YellowFlower : Flower
 {
     private void OnTriggerEnter2D(Collider2D collision)
     {

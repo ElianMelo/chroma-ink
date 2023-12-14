@@ -130,3 +130,4 @@ MonoBehaviour:
   purpleEffectForce: 50
   purpleEffectDuration: 0.1
   greenEffectPercentage: 50
+  flowerRespawnRate: 0.1
