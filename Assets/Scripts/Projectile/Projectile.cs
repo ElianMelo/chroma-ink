@@ -1,14 +1,11 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 public class Projectile : MonoBehaviour
 {
     private float speed = 10;
     private Rigidbody2D rb;
     private Vector2 dir;
+    private PlayerManager player;
 
     public void Awake()
     {
@@ -17,6 +14,7 @@ public class Projectile : MonoBehaviour
 
     private void Start()
     {
+        player = FindObjectOfType<PlayerManager>();
         dir = MouseDirection().normalized;
         rb.AddForce(dir * speed, ForceMode2D.Impulse);
         Invoke("DestroyProjectile", 2);
@@ -24,7 +22,7 @@ public class Projectile : MonoBehaviour
 
     public Vector2 MouseDirection()
     {
-        return Camera.main.ScreenToWorldPoint(Input.mousePosition) - this.transform.position;        
+        return Camera.main.ScreenToWorldPoint(Input.mousePosition) - player.transform.position;
     }
 
     public void DestroyProjectile()

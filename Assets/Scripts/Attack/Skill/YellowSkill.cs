@@ -5,6 +5,7 @@ public class YellowSkill : Skill
 {
     private bool canPerform = true;
     private MovementManager movementManager;
+    public GameObject yellowVisual;
 
     private void Awake()
     {
@@ -43,6 +44,8 @@ public class YellowSkill : Skill
     {
         canPerform = false;
         EnableEffect();
+        var entity = Instantiate(yellowVisual, this.transform.position, transform.rotation);
+        Destroy(entity, 2);
         yield return DisableEffect();
         yield return ApplyDelay();
         yield return null;

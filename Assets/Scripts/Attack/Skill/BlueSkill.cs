@@ -5,6 +5,7 @@ using UnityEngine;
 public class BlueSkill : Skill
 {
     public GameObject hitCollider;
+    public GameObject blueVisual;
     public float disableDelay = 0.2f;
     public float startDelay = 0.1f;
     private bool canAttack = true;
@@ -48,13 +49,15 @@ public class BlueSkill : Skill
 
     public IEnumerator PerformAttackCoroutine()
     {
+        DisableAttack();
         yield return new WaitForSeconds(startDelay);
         SwordTurn();
-        DisableAttack();
         EnableCollision();
-        yield return DisableColission();
+        var entity = Instantiate(blueVisual, hitCollider.transform.position, transform.rotation);
+        Destroy(entity, 2);
+        StartCoroutine(DisableColission());
         WeaponsCDUI.Instance.blueSkillCd = AttributeManager.Instance.blueSkillDelay;
-        yield return AllowAttack();
+        StartCoroutine(AllowAttack());
         yield return null;
     }
 }

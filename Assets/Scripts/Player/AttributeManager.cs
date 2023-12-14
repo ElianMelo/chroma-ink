@@ -6,6 +6,7 @@ public class AttributeManager : MonoBehaviour
 
     [Header("Player")]
     public float health;
+    public float maxHealth;
     public float moveSpeed;
 
     [Header("Movement")]
@@ -28,6 +29,20 @@ public class AttributeManager : MonoBehaviour
     public float yellowSkillDuration;
     public float yellowSkillDelay;
     public float yellowAttackDamage;
+
+    [Header("Effects")]
+    public float EffectDisableTimer;
+    public float EffectDestroyTimer;
+    public float redEffectDamage;
+    public float blueEffectForce;
+    public float blueEffectDuration;
+    public float yellowEffectPercentage;
+    public float yellowEffectDuration;
+    public float orangeEffectPercentage;
+    public float orangeEffectDuration;
+    public float purpleEffectForce;
+    public float purpleEffectDuration;
+    public float greenEffectPercentage;
 
     private void Awake()
     {

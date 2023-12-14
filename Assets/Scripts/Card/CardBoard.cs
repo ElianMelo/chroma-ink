@@ -16,14 +16,30 @@ public class CardBoard : MonoBehaviour
     public void SetBoard()
     {
         cardsFiltered = new List<Card>();
-        for (int i = 0; i < 3; i++)
+        var repeat = false;
+        while (cardsFiltered.Count < 3)
         {
             int val = Random.Range(0, cards.Count);
             Card selectedCard = cards[val];
 
-            cardsFiltered.Add(selectedCard);
-            string cardText = selectedCard.Text + " " + selectedCard.Percentage + "%";
-            cardsItems[i].SetCardValues(cardText, selectedCard.Image, i);
+            for (int i = 0;i < cardsFiltered.Count; i++)
+            {
+                if(cardsFiltered[i] == selectedCard)
+                {
+                    repeat = true;
+                }
+            }
+            if(!repeat)
+            {
+                cardsFiltered.Add(selectedCard);
+            }
+            repeat = false;
+        }
+
+        for (int j = 0; j < cardsFiltered.Count; j++)
+        {
+            string cardText = cardsFiltered[j].Text + " " + cardsFiltered[j].Percentage + "%";
+            cardsItems[j].SetCardValues(cardText, cardsFiltered[j].Image, j);
         }
     }
 

@@ -8,16 +8,19 @@ public class BlueFlower : MonoBehaviour
     {
         if (collision.CompareTag("RedAttack"))
         {
+            ColorEffect.Instance.InvokeEffect(this.transform.position, EffectType.Purple);
             Destroy(this.gameObject);
         }
 
         if (collision.CompareTag("BlueAttack"))
         {
+            ColorEffect.Instance.InvokeEffect(this.transform.position, EffectType.Blue);
             Destroy(this.gameObject);
         }
 
         if (collision.CompareTag("YellowAttack"))
         {
+            ColorEffect.Instance.InvokeEffect(this.transform.position, EffectType.Green);
             Destroy(this.gameObject);
         }
     }

@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8000464098660841291}
   - component: {fileID: 5040903053344677333}
+  - component: {fileID: 2853948994111457970}
+  - component: {fileID: 7376643061394598219}
   m_Layer: 0
   m_Name: System
   m_TagString: Untagged
@@ -44,5 +46,87 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80b7959013b9ccf4eb31bb6b37d986f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cards: []
-  attributeManager: {fileID: 0}
+  board: {fileID: 0}
+  cards:
+  - image: {fileID: 21300000, guid: 9098c7221bea77c428142be253fc816f, type: 3}
+    percentage: 50
+    text: Increase red attack speed by
+    type: 3
+  - image: {fileID: 21300000, guid: 3301945f2187ee341a962cfec9e70412, type: 3}
+    percentage: 50
+    text: Increase blue attack speed by
+    type: 7
+  - image: {fileID: 21300000, guid: bb92af8c31c76dc4aaa0818333c3f87a, type: 3}
+    percentage: 50
+    text: Increase yellow attack speed by
+    type: 11
+  - image: {fileID: 21300000, guid: df464c14b8b515249aed21c556fe9a41, type: 3}
+    percentage: 50
+    text: Decrease red skill cooldown by
+    type: 4
+  - image: {fileID: 21300000, guid: 8aa6700032af49f47b258165e34580b6, type: 3}
+    percentage: 50
+    text: Decrease blue skill cooldown by
+    type: 8
+  - image: {fileID: 21300000, guid: 257d96437a408aa4d90fdc3cbe181c8c, type: 3}
+    percentage: 50
+    text: Decrease yellow skill cooldown by
+    type: 13
+--- !u!114 &2853948994111457970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8000464098660841290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0afdb243a72ab8c40b347b0e06cacd0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  redEffectPrefab: {fileID: 8255030757481472271, guid: 2b820cdf55ae1a5498fd842e2a891aba, type: 3}
+  blueEffectPrefab: {fileID: 5363889912576966234, guid: 0f277ce9f6d3736408198362b717e5ee, type: 3}
+  yellowEffectPrefab: {fileID: 7682142221061523179, guid: e1cf799a73fe6b74d916ebc9978cfb17, type: 3}
+  orangeEffectPrefab: {fileID: 3942925230512959342, guid: a3beea80b5d96a14aa4ce8e57c00c7ff, type: 3}
+  greenEffectPrefab: {fileID: 3483575507744652958, guid: 5a0ab41358187e74ea1595caa545e172, type: 3}
+  purpleEffectPrefab: {fileID: 2427927821689619559, guid: c74f14429b7aa8040ae5e87b9eeafbfc, type: 3}
+--- !u!114 &7376643061394598219
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8000464098660841290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2631eaa884d917c458c8e28a14257d9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 0
+  maxHealth: 0
+  moveSpeed: 0
+  dashRecover: 0.1
+  redAttackDelay: 0.5
+  redSkillDelay: 1
+  redAttackDamage: 0
+  redSkillDamage: 0
+  blueAttackDelay: 0.5
+  blueSkillDelay: 1
+  blueAttackDamage: 0
+  blueSkillDamage: 0
+  yellowAttackDelay: 0.5
+  yellowSkillDuration: 2
+  yellowSkillDelay: 1
+  yellowAttackDamage: 0
+  EffectDisableTimer: 0.1
+  EffectDestroyTimer: 5
+  redEffectDamage: 200
+  blueEffectForce: 60
+  blueEffectDuration: 0.1
+  yellowEffectPercentage: 50
+  yellowEffectDuration: 2
+  orangeEffectPercentage: 60
+  orangeEffectDuration: 3
+  purpleEffectForce: 50
+  purpleEffectDuration: 0.1
+  greenEffectPercentage: 50
