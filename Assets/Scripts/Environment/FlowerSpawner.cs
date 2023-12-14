@@ -20,14 +20,15 @@ public class FlowerSpawner : MonoBehaviour
     private void CheckPositions()
     {
         var hasDestroied = false;
-        for (int i = 0; i < instances.Count; i++)
+
+        for (int i = 0; i < spawnPoints.Count; i++)
         {
             if (instances.ContainsKey(spawnPoints[i]) && instances[spawnPoints[i]] == null)
             {
                 instances.Remove(spawnPoints[i]);
                 hasDestroied = true;
             }
-            if(instances.Count < maxFlower)
+            if (instances.Count < maxFlower)
             {
                 hasDestroied = true;
             }
