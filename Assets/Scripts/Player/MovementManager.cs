@@ -23,6 +23,8 @@ public class MovementManager : MonoBehaviour
 
     void Update()
     {
+        if (AttributeManager.Instance.paused) { return; };
+
         xInput = Input.GetAxis("Horizontal");
         yInput = Input.GetAxis("Vertical");
 

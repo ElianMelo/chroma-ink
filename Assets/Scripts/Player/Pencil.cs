@@ -60,6 +60,7 @@ public class Pencil : MonoBehaviour
 
     void Update()
     {
+         if(AttributeManager.Instance.paused) { return; };
         // Follow Player
         if (followingPlayer){ FollowPlayer(); }
         // Red Attack

@@ -2,7 +2,10 @@ using UnityEngine;
 
 public class AttributeManager : MonoBehaviour
 {
-    public static AttributeManager Instance;    
+    public static AttributeManager Instance;
+
+    [Header("System")]
+    public bool paused;
 
     [Header("Player")]
     public float health;

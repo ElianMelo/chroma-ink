@@ -20,6 +20,7 @@ public class SkillManager : MonoBehaviour
     }
     void Update()
     {
+        if (AttributeManager.Instance.paused) { return; };
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             currentSkill = redSkill;

@@ -17,7 +17,8 @@ public class CardManager : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
+        if (AttributeManager.Instance.paused) { return; };
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             board.gameObject.SetActive(true);
             board.SetBoard();

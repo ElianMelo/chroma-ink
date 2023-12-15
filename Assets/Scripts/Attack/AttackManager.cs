@@ -17,7 +17,8 @@ public class AttackManager : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Mouse0))
+        if (AttributeManager.Instance.paused) { return; };
+        if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             weaponManager.currentWeapon.PermformAttack(pencil);
         }
