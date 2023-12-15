@@ -45,6 +45,7 @@ public class YellowSkill : Skill
         canPerform = false;
         EnableEffect();
         var entity = Instantiate(yellowVisual, this.transform.position, transform.rotation);
+        // Remove
         Destroy(entity, 2);
         yield return DisableEffect();
         yield return ApplyDelay();

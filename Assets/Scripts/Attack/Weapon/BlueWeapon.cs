@@ -58,6 +58,7 @@ public class BlueWeapon : Weapon
         DisableAttack();
         EnableCollision();
         var entity = Instantiate(blueVisual, pencil.transform.position, transform.rotation);
+        // Remove
         Destroy(entity, 2);
         StartCoroutine(DisableColission());
         StartCoroutine(AllowAttack());

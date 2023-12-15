@@ -54,6 +54,7 @@ public class RedSkill : Skill
         DisableAttack();
         EnableCollision();
         var entity = Instantiate(redVisual, this.transform.position, transform.rotation);
+        // Remove
         Destroy(entity, 2);
         StartCoroutine(DisableColission());
         WeaponsCDUI.Instance.redSkillCd = AttributeManager.Instance.redSkillDelay;
