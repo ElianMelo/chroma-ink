@@ -18,12 +18,13 @@ public class PlayerManager : ReceiveEffect
 
     public override void ReceiveGreenEffect()
     {
-        var heal = AttributeManager.Instance.maxHealth * AttributeManager.Instance.greenEffectPercentage;
+        var heal = AttributeManager.Instance.maxHealth * (AttributeManager.Instance.greenEffectPercentage / 100);
         if (heal > AttributeManager.Instance.maxHealth)
         {
             heal = AttributeManager.Instance.maxHealth;
         }
         AttributeManager.Instance.health += heal;
+        HealthUI.Instance.UpdateHealth();
     }
 
     public override void ReceiveOrangeEffect()

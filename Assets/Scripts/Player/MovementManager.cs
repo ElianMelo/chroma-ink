@@ -14,19 +14,72 @@ public class MovementManager : MonoBehaviour
     private float yInput;
     private Rigidbody2D playerRb;
     private EchoEffect effect;
+    private Animator animator;
 
     void Start()
     {
         playerRb = GetComponent<Rigidbody2D>();
         effect = GetComponent<EchoEffect>();
+        animator = this.GetComponent<Animator>();
+        animator.SetInteger("estado", 3);
     }
 
     void Update()
     {
         if (AttributeManager.Instance.paused) { return; };
 
-        xInput = Input.GetAxis("Horizontal");
-        yInput = Input.GetAxis("Vertical");
+        int estado = animator.GetInteger("estado");
+        float h = Input.GetAxis("Horizontal");
+        float v = Input.GetAxis("Vertical");
+
+        xInput = h;
+        yInput = v;
+
+        if (h != 0)
+        {
+            animator.speed = h < 0 ? h * -1 : h;
+        }
+        else
+        {
+            animator.speed = v < 0 ? v * -1 : v;
+        }
+
+        if (h > 0)
+        {
+            if (estado != 4)
+            {
+                animator.SetInteger("estado", 4);
+            }
+        }
+        else if (h < 0)
+        {
+            if (estado != 2)
+            {
+                animator.SetInteger("estado", 2);
+            }
+        }
+        else if (v != 0)
+        {
+            if (estado == 3)
+            {
+                animator.SetInteger("estado", 4);
+            }
+            else if (estado == 1)
+            {
+                animator.SetInteger("estado", 2);
+            }
+        }
+        else
+        {
+            if (estado == 4)
+            {
+                animator.SetInteger("estado", 3);
+            }
+            else if (estado == 2)
+            {
+                animator.SetInteger("estado", 1);
+            }
+        }
 
         if (receiveForce) return;
 
@@ -108,6 +161,7 @@ public class MovementManager : MonoBehaviour
 
     private IEnumerator RestoreDash()
     {
+        WeaponsCDUI.Instance.dashCd = AttributeManager.Instance.dashRecover;
         yield return new WaitForSeconds(AttributeManager.Instance.dashRecover);
         canDash = true;
     }
