@@ -6,22 +6,8 @@ public class YellowFlower : Flower
 {
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("RedAttack"))
-        {
-            ColorEffect.Instance.InvokeEffect(this.transform.position, EffectType.Orange);
-            Destroy(this.gameObject);
-        }
-
-        if (collision.CompareTag("BlueAttack"))
-        {
-            ColorEffect.Instance.InvokeEffect(this.transform.position, EffectType.Green);
-            Destroy(this.gameObject);
-        }
-
-        if (collision.CompareTag("YellowAttack"))
-        {
-            ColorEffect.Instance.InvokeEffect(this.transform.position, EffectType.Yellow);
-            Destroy(this.gameObject);
-        }
+        TagByAction(collision, "RedAttack", "RedSkill", EffectType.Orange);
+        TagByAction(collision, "BlueAttack", "BlueSkill", EffectType.Green);
+        TagByAction(collision, "YellowAttack", "YellowSkill", EffectType.Yellow);
     }
 }

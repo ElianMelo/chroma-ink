@@ -11,6 +11,15 @@ public class PlayerManager : ReceiveEffect
         movementManager = GetComponent<MovementManager>();
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("EnemyAttack"))
+        {
+            AttributeManager.Instance.health -= AttributeManager.Instance.enemiesDamage;
+            HealthUI.Instance.UpdateHealth();
+        }
+    }
+
     public override void ReceiveBlueEffect(Vector3 direction)
     {
         movementManager.ReceiveBlueForce(direction);

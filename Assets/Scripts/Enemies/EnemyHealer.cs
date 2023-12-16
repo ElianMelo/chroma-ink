@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyHealer : Enemy
@@ -10,44 +11,20 @@ public class EnemyHealer : Enemy
     {
         healCollider = transform.Find("HealCollider")?.gameObject;
         base.Start();
+        target = null;
 
-        GameObject[] EnemiesOnScene = GameObject.FindGameObjectsWithTag("Enemy");
-        foreach (GameObject enemy in EnemiesOnScene)
-        {
-            if (enemy.name == "EnemyRanged")
-            {
-                target = enemy.transform;
-            }
-        }
+        InvokeRepeating("FindEnemy", 0f, 1f);
     }
 
     protected override void Update()
     {
         base.Update();
 
-        //GameObject[] EnemiesOnScene = GameObject.FindGameObjectsWithTag("Enemy");
-
-        //foreach (GameObject enemy in EnemiesOnScene)
-        //{
-        //    //se a vida desse inimigo for menor que 100%
-        //    //target == enemy.transform;
-        //}
-
         if (canAct)
         {
             StartCoroutine(HealDelay(2));
             target = null;
             canAct = false;
-
-        }
-    }
-
-    private void OnTriggerStay2D(Collider2D other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            Vector2 runTo = transform.position + ((transform.position - other.transform.position) * 1);
-            agent.SetDestination(runTo);
         }
     }
 
@@ -56,5 +33,26 @@ public class EnemyHealer : Enemy
         healCollider.SetActive(true);
         yield return new WaitForSeconds(DelayTime);
         healCollider.SetActive(false);
+        FindEnemy();
+    }
+
+    private void FindEnemy()
+    {
+        GameObject[] EnemiesOnScene = GameObject.FindGameObjectsWithTag("Enemy");
+        var minDistance = Mathf.Infinity;
+        Transform targetToFollow = null;
+
+        foreach (GameObject enemy in EnemiesOnScene)
+        {
+            if(enemy.GetComponent<EnemyHealer>() != null) { continue; }
+            var distance = Vector3.Distance(this.transform.position, enemy.transform.position);
+            if (distance < minDistance)
+            {
+                minDistance = distance;
+                targetToFollow = enemy.transform;
+            }
+        }
+
+        target = targetToFollow;
     }
 }

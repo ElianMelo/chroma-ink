@@ -50,6 +50,11 @@ public class AttributeManager : MonoBehaviour
     [Header("Flowers")]
     public float flowerRespawnRate;
 
+    [Header("Enemies")]
+    public float enemiesSpawnRate;
+    public float maxEnemies;
+    public float enemiesDamage;
+
     private void Awake()
     {
         Instance = this;

@@ -131,6 +131,7 @@ public class MovementManager : MonoBehaviour
     {
         receiveForce = true;
         effect.ActivateEffect();
+        StopPlayer();
         this.playerRb.AddForce(direction.normalized * AttributeManager.Instance.blueEffectForce, ForceMode2D.Impulse);
         StartCoroutine(StopBlueForce());
     }
@@ -147,6 +148,7 @@ public class MovementManager : MonoBehaviour
     {
         receiveForce = true;
         effect.ActivateEffect();
+        StopPlayer();
         this.playerRb.AddForce(direction.normalized * AttributeManager.Instance.purpleEffectForce, ForceMode2D.Impulse);
         StartCoroutine(StopPurpleForce());
     }

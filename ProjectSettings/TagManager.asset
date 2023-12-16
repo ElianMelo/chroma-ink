@@ -7,6 +7,13 @@ TagManager:
   - RedAttack
   - BlueAttack
   - YellowAttack
+  - Enemy
+  - RedSkill
+  - BlueSkill
+  - YellowSkill
+  - EnemyAttack
+  - HealCollider
+  - Wall
   layers:
   - Default
   - TransparentFX

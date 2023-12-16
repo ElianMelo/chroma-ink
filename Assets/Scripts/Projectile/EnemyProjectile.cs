@@ -9,6 +9,13 @@ public class EnemyProjectile : MonoBehaviour
     private Transform target;
     private Vector2 dir;
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.CompareTag("Wall"))
+        {
+            Destroy(this.gameObject);
+        }
+    }
     public void Awake()
     {
         rb = GetComponent<Rigidbody2D>();

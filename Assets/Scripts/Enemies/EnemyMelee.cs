@@ -14,19 +14,11 @@ public class EnemyMelee : Enemy
         StartCoroutine(AttackDelay(2));
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            target = other.transform;
-        }
-    }
-
     IEnumerator AttackDelay(int DelayTime)
     {
         while(true)
         {
-            if(canAct)
+            if(canAct && target != null && hitCollider?.transform != null)
             {
                 //Delay para bater, quando alcançar o player
                 yield return new WaitForSeconds(0.2f);

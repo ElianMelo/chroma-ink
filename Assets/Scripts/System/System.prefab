@@ -110,17 +110,17 @@ MonoBehaviour:
   dashRecover: 1
   redAttackDelay: 0.5
   redSkillDelay: 1
-  redAttackDamage: 0
-  redSkillDamage: 0
+  redAttackDamage: 100
+  redSkillDamage: 200
   blueAttackDelay: 0.5
   blueSkillDelay: 1
-  blueAttackDamage: 0
-  blueSkillDamage: 0
+  blueAttackDamage: 70
+  blueSkillDamage: 140
   yellowAttackDelay: 0.5
   yellowSkillDuration: 2
   yellowSkillDelay: 1
-  yellowAttackDamage: 0
-  EffectDisableTimer: 0.1
+  yellowAttackDamage: 50
+  EffectDisableTimer: 0.2
   EffectDestroyTimer: 5
   redEffectDamage: 200
   blueEffectForce: 60
@@ -133,6 +133,9 @@ MonoBehaviour:
   purpleEffectDuration: 0.1
   greenEffectPercentage: 50
   flowerRespawnRate: 0.1
+  enemiesSpawnRate: 3
+  maxEnemies: 10
+  enemiesDamage: 10
 --- !u!114 &7445428635899347768
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -12,13 +12,10 @@ public class EnemyRanged : Enemy
         StartCoroutine(AttackDelay(3));
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            target = other.transform;
-        }
-    }
+    //private void OnTriggerEnter2D(Collider2D other)
+    //{
+        
+    //}
 
     IEnumerator AttackDelay(int DelayTime)
     {

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class HealthUI : MonoBehaviour
 {
@@ -18,6 +19,10 @@ public class HealthUI : MonoBehaviour
     }
     public void UpdateHealth()
     {
+        if(AttributeManager.Instance.health <= 0)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
         slider.value = AttributeManager.Instance.health / AttributeManager.Instance.maxHealth;
     }
 }
