@@ -11,7 +11,7 @@ public class EchoEffect : MonoBehaviour
     public GameObject echo;
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if(useEffect)
         {

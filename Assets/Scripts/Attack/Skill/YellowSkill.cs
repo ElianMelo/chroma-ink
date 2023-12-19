@@ -15,7 +15,7 @@ public class YellowSkill : Skill
     public IEnumerator DisableEffect()
     {
         yield return new WaitForSeconds(AttributeManager.Instance.yellowSkillDuration);
-        movementManager.speed /= 2f;
+        movementManager.speed /= (100 + AttributeManager.Instance.yellowEffectPercentage) / 100;
     }
 
     public IEnumerator ApplyDelay()
@@ -27,7 +27,7 @@ public class YellowSkill : Skill
 
     public void EnableEffect()
     {
-        movementManager.speed *= 2f;
+        movementManager.speed *= (100 + AttributeManager.Instance.yellowEffectPercentage) / 100;
     }
 
     public override void PermformSkill(Pencil pencil)

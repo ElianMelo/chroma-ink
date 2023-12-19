@@ -55,14 +55,60 @@ public class AttributeManager : MonoBehaviour
     public float maxEnemies;
     public float enemiesDamage;
 
+    private AttributeManager baseAttribute;
+
     private void Awake()
     {
         Instance = this;
+        baseAttribute = new AttributeManager();
+        Clone(this, baseAttribute);
+    }
+
+    public void ResetAttributeManager()
+    {
+        Clone(baseAttribute, this);
+    }
+
+    public void Clone(AttributeManager baseClass, AttributeManager targetClass)
+    {
+        targetClass.paused = baseClass.paused;
+        targetClass.health = baseClass.health;
+        targetClass.maxHealth = baseClass.maxHealth;
+        targetClass.moveSpeed = baseClass.moveSpeed;
+        targetClass.dashRecover = baseClass.dashRecover;
+        targetClass.redAttackDelay = baseClass.redAttackDelay;
+        targetClass.redSkillDelay = baseClass.redSkillDelay;
+        targetClass.redAttackDamage = baseClass.redAttackDamage;
+        targetClass.redSkillDamage = baseClass.redSkillDamage;
+        targetClass.blueAttackDelay = baseClass.blueAttackDelay;
+        targetClass.blueSkillDelay = baseClass.blueSkillDelay;
+        targetClass.blueAttackDamage = baseClass.blueAttackDamage;
+        targetClass.blueSkillDamage = baseClass.blueSkillDamage;
+        targetClass.yellowAttackDelay = baseClass.yellowAttackDelay;
+        targetClass.yellowSkillDuration = baseClass.yellowSkillDuration;
+        targetClass.yellowSkillDelay = baseClass.yellowSkillDelay;
+        targetClass.yellowAttackDamage = baseClass.yellowAttackDamage;
+        targetClass.EffectDisableTimer = baseClass.EffectDisableTimer;
+        targetClass.EffectDestroyTimer = baseClass.EffectDestroyTimer;
+        targetClass.redEffectDamage = baseClass.redEffectDamage;
+        targetClass.blueEffectForce = baseClass.blueEffectForce;
+        targetClass.blueEffectDuration = baseClass.blueEffectDuration;
+        targetClass.yellowEffectPercentage = baseClass.yellowEffectPercentage;
+        targetClass.yellowEffectDuration = baseClass.yellowEffectDuration;
+        targetClass.orangeEffectPercentage = baseClass.orangeEffectPercentage;
+        targetClass.orangeEffectDuration = baseClass.orangeEffectDuration;
+        targetClass.purpleEffectForce = baseClass.purpleEffectForce;
+        targetClass.purpleEffectDuration = baseClass.purpleEffectDuration;
+        targetClass.greenEffectPercentage = baseClass.greenEffectPercentage;
+        targetClass.flowerRespawnRate = baseClass.flowerRespawnRate;
+        targetClass.enemiesSpawnRate = baseClass.enemiesSpawnRate;
+        targetClass.maxEnemies = baseClass.maxEnemies;
+        targetClass.enemiesDamage = baseClass.enemiesDamage;
     }
 
     public void ChangeTypeByQuantity(AttritubeType type, float quantity)
     {
-        quantity /= 100;
+        quantity = (100 - quantity) / 100;
         switch (type)
         {
             case AttritubeType.Health:

@@ -1,10 +1,16 @@
 using System.Collections;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Windows;
+using static UnityEngine.GraphicsBuffer;
 
 public class Enemy : ReceiveEffect
 {
+    public delegate void OnDeath();
+    public static event OnDeath onDeathEvent;
+
     public float stopDistance = 0f;
     public float life = 200f;
     public float speed = 5f;
@@ -18,6 +24,8 @@ public class Enemy : ReceiveEffect
     protected bool receiveForce = false;
     protected float maxLife;
     protected bool isDead = false;
+    protected Vector3 velocity = Vector3.zero;
+    protected float smoothTime = 0.3F;
 
     protected virtual void Start()
     {
@@ -28,14 +36,13 @@ public class Enemy : ReceiveEffect
         effect = GetComponent<EchoEffect>();
         agent.updateRotation = false;
         agent.updateUpAxis = false;
+        agent.updatePosition = false;
         target = FindObjectOfType<PlayerManager>().gameObject.transform;
     }
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log(this.tag);
-        // if (this.CompareTag("HealCollider")) return;
-
+        if (AttributeManager.Instance.paused) return;
         if (isDead) return;
         var valDamage = 0f;
         var canShowPopup = false;
@@ -65,6 +72,7 @@ public class Enemy : ReceiveEffect
         {
             life -= AttributeManager.Instance.blueSkillDamage;
             valDamage = AttributeManager.Instance.blueSkillDamage;
+            ReceiveBlueEffect(collision.transform.position - this.transform.position);
             canShowPopup = true;
         }
 
@@ -95,17 +103,24 @@ public class Enemy : ReceiveEffect
         }
 
         if (life <= 0)
-        { 
+        {
             Destroy(hpBar.gameObject);
             isDead = true;
             target = null;
-            speed = 0;            
+            speed = 0;
+            onDeathEvent?.Invoke();
             Destroy(this.gameObject, 1f);
         }
     }
 
-    protected virtual void Update()
+    protected virtual void FixedUpdate()
     {
+        if (AttributeManager.Instance.paused)
+        {
+            agent.speed = 0;
+            canAct = false;
+            return;
+        }
         agent.speed = speed;
         if (target != null)
         {
@@ -120,6 +135,11 @@ public class Enemy : ReceiveEffect
             {
                 agent.SetDestination(transform.position);
                 canAct = true;
+            }
+
+            if (!receiveForce)
+            {
+                transform.position = Vector3.SmoothDamp(transform.position, agent.nextPosition, ref velocity, smoothTime);
             }
         }
     }
@@ -177,12 +197,16 @@ public class Enemy : ReceiveEffect
     public IEnumerator StopOrangeEffect()
     {
         yield return new WaitForSeconds(AttributeManager.Instance.orangeEffectDuration);
-        speed *= AttributeManager.Instance.orangeEffectPercentage;
+        this.speed *= AttributeManager.Instance.orangeEffectPercentage;
     }
 
     public void ReceiveBlueForce(Vector3 direction)
     {
         receiveForce = true;
+
+        agent.nextPosition = this.transform.position;
+        agent.SetDestination(this.transform.position);
+
         effect.ActivateEffect();
         this.enemyRb.AddForce(direction.normalized * AttributeManager.Instance.blueEffectForce, ForceMode2D.Impulse);
         StartCoroutine(StopBlueForce());
@@ -191,14 +215,22 @@ public class Enemy : ReceiveEffect
     private IEnumerator StopBlueForce()
     {
         yield return new WaitForSeconds(AttributeManager.Instance.blueEffectDuration);
-        StopPlayer();
-        receiveForce = false;
+        yield return new WaitForSeconds(1f);
+
+        agent.nextPosition = this.transform.position;
+        agent.SetDestination(this.transform.position);
+
         effect.DeactivateEffect();
+        receiveForce = false;
     }
 
     public void ReceivePurpleForce(Vector3 direction)
     {
         receiveForce = true;
+
+        agent.nextPosition = this.transform.position;
+        agent.SetDestination(this.transform.position);
+
         effect.ActivateEffect();
         this.enemyRb.AddForce(direction.normalized * AttributeManager.Instance.purpleEffectForce, ForceMode2D.Impulse);
         StartCoroutine(StopPurpleForce());
@@ -207,13 +239,12 @@ public class Enemy : ReceiveEffect
     private IEnumerator StopPurpleForce()
     {
         yield return new WaitForSeconds(AttributeManager.Instance.purpleEffectDuration);
-        StopPlayer();
-        receiveForce = false;
-        effect.DeactivateEffect();
-    }
+        yield return new WaitForSeconds(1f);
 
-    public void StopPlayer()
-    {
-        this.enemyRb.velocity = Vector2.zero;
+        agent.nextPosition = this.transform.position;
+        agent.SetDestination(this.transform.position);
+
+        effect.DeactivateEffect();
+        receiveForce = false;
     }
 }

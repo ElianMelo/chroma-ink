@@ -58,7 +58,7 @@ public class Pencil : MonoBehaviour
     public float yellowSkillLength = 2f;
     public float yellowSkillRange = 45f;
 
-    void Update()
+    void FixedUpdate()
     {
          if(AttributeManager.Instance.paused) { return; };
         // Follow Player

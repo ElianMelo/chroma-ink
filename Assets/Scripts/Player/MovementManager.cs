@@ -15,6 +15,8 @@ public class MovementManager : MonoBehaviour
     private Rigidbody2D playerRb;
     private EchoEffect effect;
     private Animator animator;
+    private float h;
+    private float v;
 
     void Start()
     {
@@ -24,13 +26,22 @@ public class MovementManager : MonoBehaviour
         animator.SetInteger("estado", 3);
     }
 
-    void Update()
+    private void Update()
+    {
+        h = Input.GetAxis("Horizontal");
+        v = Input.GetAxis("Vertical");
+
+        if (canDash && Input.GetKeyDown(KeyCode.Space))
+        {
+            StartDash();
+        }
+    }
+
+    void FixedUpdate()
     {
         if (AttributeManager.Instance.paused) { return; };
 
         int estado = animator.GetInteger("estado");
-        float h = Input.GetAxis("Horizontal");
-        float v = Input.GetAxis("Vertical");
 
         xInput = h;
         yInput = v;
@@ -83,10 +94,6 @@ public class MovementManager : MonoBehaviour
 
         if (receiveForce) return;
 
-        if (canDash && Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            StartDash();
-        }
 
         if (!canMove) return;
         Move();
@@ -115,13 +122,15 @@ public class MovementManager : MonoBehaviour
         canDash = false;
         effect.ActivateEffect();
         this.playerRb.AddForce(new Vector2(xInput, yInput).normalized * dashForce, ForceMode2D.Impulse);
+        //this.playerRb.velocity = new Vector2(xInput, yInput).normalized * dashForce;
         StartCoroutine(StopDash());
     }
 
     private IEnumerator StopDash()
     {
         yield return new WaitForSeconds(dashDuration);
-        StopPlayer();
+        if (receiveForce) yield return null;
+        // StopPlayer();
         canMove = true;
         effect.DeactivateEffect();
         StartCoroutine(RestoreDash());
@@ -131,15 +140,15 @@ public class MovementManager : MonoBehaviour
     {
         receiveForce = true;
         effect.ActivateEffect();
-        StopPlayer();
-        this.playerRb.AddForce(direction.normalized * AttributeManager.Instance.blueEffectForce, ForceMode2D.Impulse);
+        // StopPlayer();
+        this.playerRb.velocity = direction.normalized * AttributeManager.Instance.blueEffectForce;
         StartCoroutine(StopBlueForce());
     }
 
     private IEnumerator StopBlueForce()
     {
         yield return new WaitForSeconds(AttributeManager.Instance.blueEffectDuration);
-        StopPlayer();
+        // StopPlayer();
         receiveForce = false;
         effect.DeactivateEffect();
     }
@@ -148,15 +157,15 @@ public class MovementManager : MonoBehaviour
     {
         receiveForce = true;
         effect.ActivateEffect();
-        StopPlayer();
-        this.playerRb.AddForce(direction.normalized * AttributeManager.Instance.purpleEffectForce, ForceMode2D.Impulse);
+        // StopPlayer();
+        this.playerRb.velocity = direction.normalized * AttributeManager.Instance.purpleEffectForce;
         StartCoroutine(StopPurpleForce());
     }
 
     private IEnumerator StopPurpleForce()
     {
         yield return new WaitForSeconds(AttributeManager.Instance.purpleEffectDuration);
-        StopPlayer();
+        // StopPlayer();
         receiveForce = false;
         effect.DeactivateEffect();
     }
@@ -170,6 +179,7 @@ public class MovementManager : MonoBehaviour
 
     void Move()
     {
-        playerRb.velocity = new Vector2(xInput, yInput).normalized * speed;
+        // playerRb.velocity = new Vector2(xInput, yInput).normalized * speed;
+        playerRb.AddForce(new Vector2(xInput, yInput).normalized * speed);
     }
 }

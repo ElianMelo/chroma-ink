@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class EnemyHealer : Enemy
 {
+    public float healDelayTime = 2f;
+    private bool canPerform = true;
     private GameObject healCollider;
 
     protected override void Start()
@@ -13,27 +15,30 @@ public class EnemyHealer : Enemy
         base.Start();
         target = null;
 
-        InvokeRepeating("FindEnemy", 0f, 1f);
+        InvokeRepeating("FindEnemy", 0f, 2f);
     }
 
-    protected override void Update()
+    protected override void FixedUpdate()
     {
-        base.Update();
+        base.FixedUpdate();
 
-        if (canAct)
+        if (canAct && canPerform)
         {
-            StartCoroutine(HealDelay(2));
+            StartCoroutine(HealDelay(healDelayTime));
             target = null;
             canAct = false;
+            canPerform = false;
         }
     }
 
-    IEnumerator HealDelay(int DelayTime)
+    IEnumerator HealDelay(float DelayTime)
     {
         healCollider.SetActive(true);
-        yield return new WaitForSeconds(DelayTime);
+        yield return new WaitForSeconds(.2f);
         healCollider.SetActive(false);
         FindEnemy();
+        yield return new WaitForSeconds(DelayTime);
+        canPerform = true;
     }
 
     private void FindEnemy()
@@ -41,6 +46,9 @@ public class EnemyHealer : Enemy
         GameObject[] EnemiesOnScene = GameObject.FindGameObjectsWithTag("Enemy");
         var minDistance = Mathf.Infinity;
         Transform targetToFollow = null;
+
+        agent.nextPosition = this.transform.position;
+        agent.SetDestination(this.transform.position);
 
         foreach (GameObject enemy in EnemiesOnScene)
         {
@@ -53,6 +61,12 @@ public class EnemyHealer : Enemy
             }
         }
 
-        target = targetToFollow;
+        if(targetToFollow == null)
+        {
+            target = FindObjectOfType<PlayerManager>().gameObject.transform;
+        } else
+        {
+            target = targetToFollow;
+        }
     }
 }

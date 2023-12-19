@@ -21,7 +21,7 @@ public class HealthUI : MonoBehaviour
     {
         if(AttributeManager.Instance.health <= 0)
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            LevelManager.Instance.EndGame();
         }
         slider.value = AttributeManager.Instance.health / AttributeManager.Instance.maxHealth;
     }

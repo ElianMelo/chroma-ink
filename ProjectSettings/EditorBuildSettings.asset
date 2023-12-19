@@ -4,5 +4,20 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/System.unity
+    guid: a4f140a3431022e45b56eb338e1a7852
+  - enabled: 1
+    path: Assets/Scenes/Menu.unity
+    guid: c0f68f7b463cdc4459375aa42ed59a2e
+  - enabled: 1
+    path: Assets/Scenes/NightShift.unity
+    guid: cd47260bbadebf44fb1fac82496196fa
+  - enabled: 1
+    path: Assets/Scenes/FlowerField.unity
+    guid: c8265e156dc8c144b84172beca833165
+  - enabled: 1
+    path: Assets/Scenes/DesertParadise.unity
+    guid: 362e928cc26cd774f9355a4cad0ef29b
   m_configObjects: {}

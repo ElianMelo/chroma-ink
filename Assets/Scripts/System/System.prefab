@@ -13,6 +13,9 @@ GameObject:
   - component: {fileID: 2853948994111457970}
   - component: {fileID: 7376643061394598219}
   - component: {fileID: 7445428635899347768}
+  - component: {fileID: 8298338682880413410}
+  - component: {fileID: 9198285634735586080}
+  - component: {fileID: 5602940644386334411}
   m_Layer: 0
   m_Name: System
   m_TagString: Untagged
@@ -50,27 +53,27 @@ MonoBehaviour:
   board: {fileID: 0}
   cards:
   - image: {fileID: 21300000, guid: 9098c7221bea77c428142be253fc816f, type: 3}
-    percentage: 20
+    percentage: 80
     text: Increase red attack speed by
     type: 3
   - image: {fileID: 21300000, guid: 3301945f2187ee341a962cfec9e70412, type: 3}
-    percentage: 20
+    percentage: 80
     text: Increase blue attack speed by
     type: 7
   - image: {fileID: 21300000, guid: bb92af8c31c76dc4aaa0818333c3f87a, type: 3}
-    percentage: 20
+    percentage: 80
     text: Increase yellow attack speed by
     type: 11
   - image: {fileID: 21300000, guid: df464c14b8b515249aed21c556fe9a41, type: 3}
-    percentage: 20
+    percentage: 80
     text: Decrease red skill cooldown by
     type: 4
   - image: {fileID: 21300000, guid: 8aa6700032af49f47b258165e34580b6, type: 3}
-    percentage: 20
+    percentage: 80
     text: Decrease blue skill cooldown by
     type: 8
   - image: {fileID: 21300000, guid: 257d96437a408aa4d90fdc3cbe181c8c, type: 3}
-    percentage: 20
+    percentage: 80
     text: Decrease yellow skill cooldown by
     type: 13
 --- !u!114 &2853948994111457970
@@ -149,3 +152,43 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseCanvas: {fileID: 0}
+--- !u!114 &8298338682880413410
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8000464098660841290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6213a4ceb944724789c42a77a304818, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &9198285634735586080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8000464098660841290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 931b96dd427264b4c9c5659a6fba85f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5602940644386334411
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8000464098660841290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceddc59a7e8a7cb44b58c70e3411fc83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scenes:
+  - NightShift
+  - DesertParadise
+  - FlowerField

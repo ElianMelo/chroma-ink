@@ -47,6 +47,8 @@ public class CardBoard : MonoBehaviour
     {
         cardManager.AddAttributeCard(cardsFiltered[index]);
         this.gameObject.SetActive(false);
+        AttributeManager.Instance.paused = false;
+        LevelManager.Instance.EndLevelNoCards();
     }
 
     void Awake()

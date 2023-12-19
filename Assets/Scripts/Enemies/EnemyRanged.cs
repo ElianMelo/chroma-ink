@@ -12,11 +12,6 @@ public class EnemyRanged : Enemy
         StartCoroutine(AttackDelay(3));
     }
 
-    //private void OnTriggerEnter2D(Collider2D other)
-    //{
-        
-    //}
-
     IEnumerator AttackDelay(int DelayTime)
     {
         while(true)
@@ -28,7 +23,7 @@ public class EnemyRanged : Enemy
             }
             else
             {
-                yield return null;
+                yield return new WaitForSeconds(.5f);
             }
         }  
     }

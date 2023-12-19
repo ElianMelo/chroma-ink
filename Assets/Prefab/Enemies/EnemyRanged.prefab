@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 5504442931728635642}
   - component: {fileID: 5504442931728635643}
   - component: {fileID: 5504442932313767040}
-  - component: {fileID: 5504442932313767041}
   - component: {fileID: 5504442932313767042}
   - component: {fileID: 7133002387762350953}
   - component: {fileID: 2405257368987485127}
+  - component: {fileID: 1385758068045884631}
   m_Layer: 0
   m_Name: EnemyRanged
   m_TagString: Enemy
@@ -103,30 +103,14 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_LinearDrag: 4
+  m_AngularDrag: 0
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
---- !u!58 &5504442932313767041
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5504442931728635644}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.6
+  m_Constraints: 4
 --- !u!195 &5504442932313767042
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -180,6 +164,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startTimeBtwSpawns: 0
   echo: {fileID: 2215695729801854205, guid: 92e1ef8e818ac46448883f9dea726940, type: 3}
+--- !u!58 &1385758068045884631
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5504442931728635644}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 1
 --- !u!1001 &2475638510080545717
 PrefabInstance:
   m_ObjectHideFlags: 0

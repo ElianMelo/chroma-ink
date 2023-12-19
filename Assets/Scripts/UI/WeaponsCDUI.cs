@@ -18,9 +18,9 @@ public class WeaponsCDUI : MonoBehaviour
     public float yellowSkillCd = 0f;
     public float dashCd = 0f;
 
-    void Update()
+    void FixedUpdate()
     {
-        redSkillCd -= Time.deltaTime; 
+        redSkillCd -= Time.deltaTime;
         blueSkillCd -= Time.deltaTime; 
         yellowSkillCd -= Time.deltaTime;
         dashCd -= Time.deltaTime;

@@ -30,7 +30,7 @@ public class EnemyMelee : Enemy
 
                 //Ativa a colisão por alguns segundos
                 hitCollider.SetActive(true);
-                yield return new WaitForSeconds(0.2f);
+                yield return new WaitForSeconds(.2f);
                 hitCollider.SetActive(false);
 
                 //Delay para atacar novamente
@@ -38,7 +38,7 @@ public class EnemyMelee : Enemy
             }
             else
             {
-                yield return null;
+                yield return new WaitForSeconds(.5f);
             }
         }  
     }
