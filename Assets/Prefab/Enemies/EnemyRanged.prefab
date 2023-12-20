@@ -79,8 +79,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 10
-  m_Sprite: {fileID: 21300000, guid: 60e58bbc672db1147bd4b83664251d61, type: 3}
-  m_Color: {r: 0.33268064, g: 0.57929885, b: 0.7924528, a: 1}
+  m_Sprite: {fileID: 21300000, guid: c096decb6770ded4d93f8625d05a0b72, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -148,7 +148,7 @@ MonoBehaviour:
   stopDistance: 8
   life: 100
   speed: 5
-  floatingText: {fileID: 4366111507209884202, guid: d5e0bf6eb22fa434e93340eb7a7f6020, type: 3}
+  reactionData: {fileID: 11400000, guid: d90db76e05c93b640bad86c810d1bb96, type: 2}
   prefabProjectile: {fileID: 5863691573067827443, guid: b603deab411f4544bbc1972ca949c44b, type: 3}
 --- !u!114 &2405257368987485127
 MonoBehaviour:

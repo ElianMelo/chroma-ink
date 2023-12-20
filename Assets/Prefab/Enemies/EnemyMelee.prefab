@@ -106,7 +106,7 @@ MonoBehaviour:
   stopDistance: 2
   life: 200
   speed: 7
-  floatingText: {fileID: 4366111507209884202, guid: d5e0bf6eb22fa434e93340eb7a7f6020, type: 3}
+  reactionData: {fileID: 11400000, guid: d90db76e05c93b640bad86c810d1bb96, type: 2}
 --- !u!50 &1911368762418624411
 Rigidbody2D:
   serializedVersion: 4

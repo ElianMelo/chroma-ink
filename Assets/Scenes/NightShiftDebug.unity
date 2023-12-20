@@ -1075,6 +1075,10 @@ PrefabInstance:
       propertyPath: board
       value: 
       objectReference: {fileID: 1230265541}
+    - target: {fileID: 7376643061394598219, guid: fc0db61f658566b4c8a5fa49111387c2, type: 3}
+      propertyPath: enemiesSpawnRate
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7445428635899347768, guid: fc0db61f658566b4c8a5fa49111387c2, type: 3}
       propertyPath: pauseCanvas
       value: 
@@ -1272,7 +1276,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 217dee8a1aa2e704c9cfc32731be9232, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
 --- !u!1 &526106083
 GameObject:
   m_ObjectHideFlags: 0

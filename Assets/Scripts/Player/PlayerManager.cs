@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerManager : ReceiveEffect
 {
+    public GameObject floatingText;
+
     private MovementManager movementManager;
 
     private void Awake()
@@ -17,7 +19,28 @@ public class PlayerManager : ReceiveEffect
         {
             AttributeManager.Instance.health -= AttributeManager.Instance.enemiesDamage;
             HealthUI.Instance.UpdateHealth();
+
+            var text = Instantiate(floatingText, this.transform.position, Quaternion.identity).GetComponent<FloatingText>();
+            text.transform.SetParent(this.transform);
+            text.SetColor(TextColors.WHITE);
+            text.ChangeText(AttributeManager.Instance.enemiesDamage.ToString());
+
+            StartCoroutine(TakeHit(collision.transform.position));
         }
+    }
+
+    private IEnumerator TakeHit(Vector3 otherPosition)
+    {
+        SpriteRenderer sprite = this.GetComponent<SpriteRenderer>();
+        Color color = sprite.color;
+        color.a = 0.4f;
+        sprite.color = color;
+        this.GetComponent<Rigidbody2D>().AddForce((this.transform.position - otherPosition).normalized *
+            3f, ForceMode2D.Impulse);
+        yield return new WaitForSeconds(0.2f);
+        color.a = 1f;
+        sprite.color = color;
+        yield return null;
     }
 
     public override void ReceiveBlueEffect(Vector3 direction)
@@ -35,6 +58,12 @@ public class PlayerManager : ReceiveEffect
         {
             AttributeManager.Instance.health += heal;
         }
+
+        var text = Instantiate(floatingText, this.transform.position, Quaternion.identity).GetComponent<FloatingText>();
+        text.transform.SetParent(this.transform);
+        text.SetColor(TextColors.GREEN);
+        text.ChangeText(heal.ToString());
+
         HealthUI.Instance.UpdateHealth();
     }
 

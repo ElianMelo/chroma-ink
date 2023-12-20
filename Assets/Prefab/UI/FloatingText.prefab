@@ -31,7 +31,7 @@ RectTransform:
   m_GameObject: {fileID: 4366111507209884202}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -98,7 +98,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destroyTime: 1
   offset: {x: 0, y: 2, z: 0}
-  randomizeIntensity: {x: 0.5, y: 1, z: 0}
+  randomizeIntensity: {x: -1, y: 1, z: 0}
+  red: {r: 1, g: 0.41037738, b: 0.41037738, a: 0}
+  blue: {r: 0.2663314, g: 0.76915556, b: 0.990566, a: 0}
+  yellow: {r: 1, g: 0.9873911, b: 0.3443396, a: 0}
+  green: {r: 0.46990767, g: 1, b: 0.23113209, a: 0}
 --- !u!95 &261401024565473228
 Animator:
   serializedVersion: 5
@@ -171,15 +175,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: 100
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 41987d16a0d207f469d8911e1c26038b, type: 2}
+  m_sharedMaterial: {fileID: -3431815365959538274, guid: 41987d16a0d207f469d8911e1c26038b, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4160749823
+  m_fontColor: {r: 1, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -196,13 +200,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 2
-  m_fontSizeBase: 2
+  m_fontSize: 4
+  m_fontSizeBase: 4
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -232,7 +236,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: -0.5328369, y: -0.3219604, z: -0.54402685, w: -0.17761225}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0

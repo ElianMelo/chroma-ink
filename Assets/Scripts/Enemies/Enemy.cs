@@ -1,10 +1,6 @@
 using System.Collections;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Windows;
-using static UnityEngine.GraphicsBuffer;
 
 public class Enemy : ReceiveEffect
 {
@@ -14,7 +10,7 @@ public class Enemy : ReceiveEffect
     public float stopDistance = 0f;
     public float life = 200f;
     public float speed = 5f;
-    public GameObject floatingText;
+    public ReactionData reactionData;
     protected EnemyHealthUI hpBar;
     protected Transform target;
     protected NavMeshAgent agent;
@@ -26,6 +22,7 @@ public class Enemy : ReceiveEffect
     protected bool isDead = false;
     protected Vector3 velocity = Vector3.zero;
     protected float smoothTime = 0.3F;
+    protected bool canTakeDamage = true;
 
     protected virtual void Start()
     {
@@ -43,15 +40,23 @@ public class Enemy : ReceiveEffect
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
         if (AttributeManager.Instance.paused) return;
+        if (!canTakeDamage) return;
         if (isDead) return;
         var valDamage = 0f;
         var canShowPopup = false;
+        TextColors color = TextColors.WHITE;
+        bool increment = false;
 
         if (collision.CompareTag("RedAttack"))
         {
             life -= AttributeManager.Instance.redAttackDamage;
             valDamage = AttributeManager.Instance.redAttackDamage;
             canShowPopup = true;
+            color = TextColors.RED;
+
+            var particle = Instantiate(reactionData.redParticle, this.transform.position, Quaternion.identity).GetComponent<ParticleSystem>();
+            Destroy(particle, 1f);
+            particle.Play();
         }
 
         if (collision.CompareTag("RedSkill"))
@@ -59,6 +64,12 @@ public class Enemy : ReceiveEffect
             life -= AttributeManager.Instance.redSkillDamage;
             valDamage = AttributeManager.Instance.redSkillDamage;
             canShowPopup = true;
+            color = TextColors.RED;
+            increment = true;
+
+            var particle = Instantiate(reactionData.redParticle, this.transform.position, Quaternion.identity).GetComponent<ParticleSystem>();
+            Destroy(particle, 1f);
+            particle.Play();
         }
 
         if (collision.CompareTag("BlueAttack"))
@@ -66,6 +77,11 @@ public class Enemy : ReceiveEffect
             life -= AttributeManager.Instance.blueAttackDamage;
             valDamage = AttributeManager.Instance.blueAttackDamage;
             canShowPopup = true;
+            color = TextColors.BLUE;
+
+            var particle = Instantiate(reactionData.blueParticle, this.transform.position, Quaternion.identity).GetComponent<ParticleSystem>();
+            Destroy(particle, 1f);
+            particle.Play();
         }
 
         if (collision.CompareTag("BlueSkill"))
@@ -74,6 +90,12 @@ public class Enemy : ReceiveEffect
             valDamage = AttributeManager.Instance.blueSkillDamage;
             ReceiveBlueEffect(collision.transform.position - this.transform.position);
             canShowPopup = true;
+            color = TextColors.BLUE;
+            increment = true;
+
+            var particle = Instantiate(reactionData.blueParticle, this.transform.position, Quaternion.identity).GetComponent<ParticleSystem>();
+            Destroy(particle, 1f);
+            particle.Play();
         }
 
         if (collision.CompareTag("YellowAttack"))
@@ -81,6 +103,11 @@ public class Enemy : ReceiveEffect
             life -= AttributeManager.Instance.yellowAttackDamage;
             valDamage = AttributeManager.Instance.yellowAttackDamage;
             canShowPopup = true;
+            color = TextColors.YELLOW;
+
+            var particle = Instantiate(reactionData.yellowParticle, this.transform.position, Quaternion.identity).GetComponent<ParticleSystem>();
+            Destroy(particle, 1f);
+            particle.Play();
         }
 
         if(collision.CompareTag("HealCollider"))
@@ -92,25 +119,47 @@ public class Enemy : ReceiveEffect
             }
             valDamage = maxLife / 2;
             canShowPopup = true;
+            color = TextColors.GREEN;
         }
 
         if(canShowPopup)
         {
             hpBar.UpdateHealth(life, maxLife);
-            var text = Instantiate(floatingText, this.transform.position, Quaternion.identity).GetComponent<FloatingText>();
+            var text = Instantiate(reactionData.floatingText, this.transform.position, Quaternion.identity).GetComponent<FloatingText>();
             text.transform.SetParent(this.transform);
+            text.SetColor(color);
+            if(increment){ text.IncrementSize(); }
             text.ChangeText(valDamage.ToString());
+            StartCoroutine(TakeHit(collision.transform.position));
         }
 
-        if (life <= 0)
-        {
-            Destroy(hpBar.gameObject);
-            isDead = true;
-            target = null;
-            speed = 0;
-            onDeathEvent?.Invoke();
-            Destroy(this.gameObject, 1f);
-        }
+        if (life <= 0) { Death(); }
+    }
+
+    private IEnumerator TakeHit(Vector3 otherPosition)
+    {
+        canTakeDamage = false;
+        SpriteRenderer sprite = this.GetComponent<SpriteRenderer>();
+        Color color = sprite.color;
+        color.a = 0.4f;
+        sprite.color = color;
+        this.enemyRb.AddForce((this.transform.position - otherPosition).normalized * 
+            3f, ForceMode2D.Impulse);
+        yield return new WaitForSeconds(0.2f);
+        canTakeDamage = true;
+        color.a = 1f;
+        sprite.color = color;
+        yield return null;
+    }
+
+    private void Death()
+    {
+        Destroy(hpBar.gameObject);
+        isDead = true;
+        target = null;
+        speed = 0;
+        onDeathEvent?.Invoke();
+        Destroy(this.gameObject, 1f);
     }
 
     protected virtual void FixedUpdate()
@@ -178,14 +227,13 @@ public class Enemy : ReceiveEffect
         life -= AttributeManager.Instance.redEffectDamage;
 
         hpBar.UpdateHealth(life, maxLife);
-        var text = Instantiate(floatingText, this.transform.position, Quaternion.identity).GetComponent<FloatingText>();
+        var text = Instantiate(reactionData.floatingText, this.transform.position, Quaternion.identity).GetComponent<FloatingText>();
         text.transform.SetParent(this.transform);
+        text.SetColor(TextColors.RED);
+        text.IncrementSize();
         text.ChangeText(AttributeManager.Instance.redEffectDamage.ToString());
 
-        if (life <= 0)
-        {
-            Destroy(this.gameObject);
-        }
+        if (life <= 0) { Death(); }
         return;
     }
 

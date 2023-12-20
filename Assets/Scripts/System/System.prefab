@@ -136,7 +136,7 @@ MonoBehaviour:
   purpleEffectDuration: 0.1
   greenEffectPercentage: 50
   flowerRespawnRate: 0.1
-  enemiesSpawnRate: 3
+  enemiesSpawnRate: 1
   maxEnemies: 10
   enemiesDamage: 10
 --- !u!114 &7445428635899347768

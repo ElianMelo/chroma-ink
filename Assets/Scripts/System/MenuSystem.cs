@@ -19,14 +19,6 @@ public class MenuSystem : MonoBehaviour
         LevelManager.Instance.ResetGame();
         enableInterface = true;
     }
-    public void Tutorial()
-    {
-
-    }
-    public void Credits()
-    {
-
-    }
     public void Exit()
     {
         Application.Quit();

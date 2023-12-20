@@ -203,8 +203,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 10
-  m_Sprite: {fileID: 21300000, guid: 60e58bbc672db1147bd4b83664251d61, type: 3}
-  m_Color: {r: 0.8867924, g: 0.45594516, b: 0.50223786, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 0e4e74f1895061248b8b5896e482e0f3, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -229,7 +229,7 @@ MonoBehaviour:
   stopDistance: 3
   life: 150
   speed: 8
-  floatingText: {fileID: 4366111507209884202, guid: d5e0bf6eb22fa434e93340eb7a7f6020, type: 3}
+  reactionData: {fileID: 11400000, guid: d90db76e05c93b640bad86c810d1bb96, type: 2}
   healDelayTime: 2
 --- !u!50 &9020014415093913887
 Rigidbody2D:
