@@ -242,7 +242,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 217dee8a1aa2e704c9cfc32731be9232, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 15
+  cameraControllerData: {fileID: 11400000, guid: 99a2570119f9b8344aac51c473835a61, type: 2}
 --- !u!1001 &1544948161
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -298,10 +298,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: FlowerField
       objectReference: {fileID: 0}
-    - target: {fileID: 7710257928427926404, guid: 88253cb14ff704d49883168992c3fb16, type: 3}
-      propertyPath: m_Name
-      value: EnemySpawnerFlowerField
-      objectReference: {fileID: 0}
     - target: {fileID: 8017424747861270630, guid: 88253cb14ff704d49883168992c3fb16, type: 3}
       propertyPath: m_Camera
       value: 
@@ -325,11 +321,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2077458125766457329, guid: 10584ad936d3e7143b9b461b07d14dfa, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.14
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2077458125766457329, guid: 10584ad936d3e7143b9b461b07d14dfa, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.8
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2077458125766457329, guid: 10584ad936d3e7143b9b461b07d14dfa, type: 3}
       propertyPath: m_LocalPosition.z

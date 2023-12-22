@@ -242,7 +242,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 217dee8a1aa2e704c9cfc32731be9232, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 15
+  cameraControllerData: {fileID: 11400000, guid: 99a2570119f9b8344aac51c473835a61, type: 2}
 --- !u!1001 &1219137043
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -256,15 +256,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2831238277686871440, guid: def539446d6b2cd49bede718bef8a75c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.39056695
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2831238277686871440, guid: def539446d6b2cd49bede718bef8a75c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.6358433
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2831238277686871440, guid: def539446d6b2cd49bede718bef8a75c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.12520924
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2831238277686871440, guid: def539446d6b2cd49bede718bef8a75c, type: 3}
       propertyPath: m_LocalRotation.w
@@ -298,10 +298,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: DesertParadise
       objectReference: {fileID: 0}
-    - target: {fileID: 7194376288684746340, guid: def539446d6b2cd49bede718bef8a75c, type: 3}
-      propertyPath: m_NavMeshData
-      value: 
-      objectReference: {fileID: 23800000, guid: 89a261d04222f554fa232420c8a1b203, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: def539446d6b2cd49bede718bef8a75c, type: 3}
 --- !u!1001 &2077458126300852566
@@ -321,11 +317,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2077458125766457329, guid: 10584ad936d3e7143b9b461b07d14dfa, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.14
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2077458125766457329, guid: 10584ad936d3e7143b9b461b07d14dfa, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.8
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2077458125766457329, guid: 10584ad936d3e7143b9b461b07d14dfa, type: 3}
       propertyPath: m_LocalPosition.z

@@ -8,6 +8,7 @@ public class MovementManager : MonoBehaviour
     public float speed;
     public float dashForce;
     public float dashDuration;
+    public GameObject moveEffect;
 
     private bool receiveForce = false;
     private float xInput;
@@ -17,9 +18,11 @@ public class MovementManager : MonoBehaviour
     private Animator animator;
     private float h;
     private float v;
+    private float baseSpeed;
 
     void Start()
     {
+        baseSpeed = speed;
         playerRb = GetComponent<Rigidbody2D>();
         effect = GetComponent<EchoEffect>();
         animator = this.GetComponent<Animator>();
@@ -104,9 +107,22 @@ public class MovementManager : MonoBehaviour
         this.playerRb.velocity = Vector2.zero;
     }
 
+    public void VerifyEffect()
+    {
+        if (speed != baseSpeed)
+        {
+            moveEffect.SetActive(true);
+        }
+        if (speed == baseSpeed)
+        {
+            moveEffect.SetActive(false);
+        }
+    }
+
     public void IncreaseMoveSpeed()
     {
         speed *= (100 + AttributeManager.Instance.yellowEffectPercentage) / 100;
+        VerifyEffect();
         StartCoroutine(ReduceMoveSpeed());
     }
 
@@ -114,6 +130,7 @@ public class MovementManager : MonoBehaviour
     {
         yield return new WaitForSeconds(AttributeManager.Instance.yellowEffectDuration);
         speed /= (100 + AttributeManager.Instance.yellowEffectPercentage) / 100;
+        VerifyEffect();
     }
 
     public void StartDash()

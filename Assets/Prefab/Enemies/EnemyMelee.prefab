@@ -105,7 +105,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stopDistance: 2
   life: 200
-  speed: 7
+  speed: 11
   reactionData: {fileID: 11400000, guid: d90db76e05c93b640bad86c810d1bb96, type: 2}
 --- !u!50 &1911368762418624411
 Rigidbody2D:

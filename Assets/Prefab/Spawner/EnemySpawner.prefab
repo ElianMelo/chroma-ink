@@ -319,10 +319,4 @@ MonoBehaviour:
   - {fileID: 7133002387762350953, guid: 1506bfa9bce01f846926b721472fb587, type: 3}
   spawnPoints:
   - {fileID: 6480513182618148994}
-  startDelay: 1
-  spawnRate: 1
-  waveQuantity: 2
-  maxBaseWaveEnemies: 5
-  waveIncrement: 1
-  maxEnemiesWave: 3
-  maxnemiesWaveIncrement: 1
+  enemySpawnerData: {fileID: 11400000, guid: f22fad4d248f2cd4aae417b023372001, type: 2}

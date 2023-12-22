@@ -19,10 +19,6 @@ public class HealthUI : MonoBehaviour
     }
     public void UpdateHealth()
     {
-        if(AttributeManager.Instance.health <= 0)
-        {
-            LevelManager.Instance.EndGame();
-        }
         slider.value = AttributeManager.Instance.health / AttributeManager.Instance.maxHealth;
     }
 }

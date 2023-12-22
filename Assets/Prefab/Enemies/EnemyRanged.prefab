@@ -147,7 +147,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stopDistance: 8
   life: 100
-  speed: 5
+  speed: 8
   reactionData: {fileID: 11400000, guid: d90db76e05c93b640bad86c810d1bb96, type: 2}
   prefabProjectile: {fileID: 5863691573067827443, guid: b603deab411f4544bbc1972ca949c44b, type: 3}
 --- !u!114 &2405257368987485127

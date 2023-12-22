@@ -70,6 +70,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2856474116413011417, guid: 7c8e95515ba524545b78d278aeca525a, type: 3}
+      propertyPath: enemySpawnerData
+      value: 
+      objectReference: {fileID: 11400000, guid: f22fad4d248f2cd4aae417b023372001, type: 2}
+    - target: {fileID: 2856474116413011417, guid: 7c8e95515ba524545b78d278aeca525a, type: 3}
       propertyPath: spawnPoints.Array.size
       value: 3
       objectReference: {fileID: 0}

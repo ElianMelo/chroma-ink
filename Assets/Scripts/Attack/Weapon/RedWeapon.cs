@@ -55,9 +55,7 @@ public class RedWeapon : Weapon
         DisableAttack();
         SwordTurn();
         EnableCollision();
-        var entity = Instantiate(redVisual, pencil.transform.position, transform.rotation);
-        // Remove
-        Destroy(entity, 2);
+        Instantiate(redVisual, pencil.transform.position, transform.rotation);
         StartCoroutine(DisableColission());
         StartCoroutine(AllowAttack());
         yield return null;

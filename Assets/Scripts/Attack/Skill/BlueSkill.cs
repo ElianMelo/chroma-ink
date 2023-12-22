@@ -53,8 +53,7 @@ public class BlueSkill : Skill
         yield return new WaitForSeconds(startDelay);
         SwordTurn();
         EnableCollision();
-        var entity = Instantiate(blueVisual, hitCollider.transform.position, transform.rotation);
-        Destroy(entity, 2);
+        Instantiate(blueVisual, hitCollider.transform.position, transform.rotation);
         StartCoroutine(DisableColission());
         WeaponsCDUI.Instance.blueSkillCd = AttributeManager.Instance.blueSkillDelay;
         StartCoroutine(AllowAttack());

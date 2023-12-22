@@ -16,6 +16,7 @@ public class YellowSkill : Skill
     {
         yield return new WaitForSeconds(AttributeManager.Instance.yellowSkillDuration);
         movementManager.speed /= (100 + AttributeManager.Instance.yellowEffectPercentage) / 100;
+        movementManager.VerifyEffect();
     }
 
     public IEnumerator ApplyDelay()
@@ -28,6 +29,7 @@ public class YellowSkill : Skill
     public void EnableEffect()
     {
         movementManager.speed *= (100 + AttributeManager.Instance.yellowEffectPercentage) / 100;
+        movementManager.VerifyEffect();
     }
 
     public override void PermformSkill(Pencil pencil)
@@ -44,9 +46,7 @@ public class YellowSkill : Skill
     {
         canPerform = false;
         EnableEffect();
-        var entity = Instantiate(yellowVisual, this.transform.position, transform.rotation);
-        // Remove
-        Destroy(entity, 2);
+        Instantiate(yellowVisual, this.transform.position, transform.rotation);
         yield return DisableEffect();
         yield return ApplyDelay();
         yield return null;

@@ -35,6 +35,7 @@ public class Enemy : ReceiveEffect
         agent.updateUpAxis = false;
         agent.updatePosition = false;
         target = FindObjectOfType<PlayerManager>().gameObject.transform;
+        this.transform.rotation = Quaternion.identity;
     }
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
@@ -55,8 +56,8 @@ public class Enemy : ReceiveEffect
             color = TextColors.RED;
 
             var particle = Instantiate(reactionData.redParticle, this.transform.position, Quaternion.identity).GetComponent<ParticleSystem>();
-            Destroy(particle, 1f);
             particle.Play();
+            Destroy(particle.gameObject, 1f);
         }
 
         if (collision.CompareTag("RedSkill"))
@@ -68,8 +69,8 @@ public class Enemy : ReceiveEffect
             increment = true;
 
             var particle = Instantiate(reactionData.redParticle, this.transform.position, Quaternion.identity).GetComponent<ParticleSystem>();
-            Destroy(particle, 1f);
             particle.Play();
+            Destroy(particle.gameObject, 1f);
         }
 
         if (collision.CompareTag("BlueAttack"))
@@ -80,8 +81,8 @@ public class Enemy : ReceiveEffect
             color = TextColors.BLUE;
 
             var particle = Instantiate(reactionData.blueParticle, this.transform.position, Quaternion.identity).GetComponent<ParticleSystem>();
-            Destroy(particle, 1f);
             particle.Play();
+            Destroy(particle.gameObject, 1f);
         }
 
         if (collision.CompareTag("BlueSkill"))
@@ -94,8 +95,8 @@ public class Enemy : ReceiveEffect
             increment = true;
 
             var particle = Instantiate(reactionData.blueParticle, this.transform.position, Quaternion.identity).GetComponent<ParticleSystem>();
-            Destroy(particle, 1f);
             particle.Play();
+            Destroy(particle.gameObject, 1f);
         }
 
         if (collision.CompareTag("YellowAttack"))
@@ -106,7 +107,7 @@ public class Enemy : ReceiveEffect
             color = TextColors.YELLOW;
 
             var particle = Instantiate(reactionData.yellowParticle, this.transform.position, Quaternion.identity).GetComponent<ParticleSystem>();
-            Destroy(particle, 1f);
+            Destroy(particle.gameObject, 1f);
             particle.Play();
         }
 

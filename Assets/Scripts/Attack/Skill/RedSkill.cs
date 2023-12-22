@@ -53,9 +53,7 @@ public class RedSkill : Skill
         SwordTurn();
         DisableAttack();
         EnableCollision();
-        var entity = Instantiate(redVisual, this.transform.position, transform.rotation);
-        // Remove
-        Destroy(entity, 2);
+        Instantiate(redVisual, this.transform.position, transform.rotation);
         StartCoroutine(DisableColission());
         WeaponsCDUI.Instance.redSkillCd = AttributeManager.Instance.redSkillDelay;
         StartCoroutine(AllowAttack());

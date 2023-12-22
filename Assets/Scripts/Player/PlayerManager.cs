@@ -18,6 +18,10 @@ public class PlayerManager : ReceiveEffect
         if (collision.CompareTag("EnemyAttack"))
         {
             AttributeManager.Instance.health -= AttributeManager.Instance.enemiesDamage;
+            if (AttributeManager.Instance.health <= 0)
+            {
+                LevelManager.Instance.LoseGame();
+            }
             HealthUI.Instance.UpdateHealth();
 
             var text = Instantiate(floatingText, this.transform.position, Quaternion.identity).GetComponent<FloatingText>();

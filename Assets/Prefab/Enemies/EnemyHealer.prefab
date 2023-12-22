@@ -228,7 +228,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stopDistance: 3
   life: 150
-  speed: 8
+  speed: 12
   reactionData: {fileID: 11400000, guid: d90db76e05c93b640bad86c810d1bb96, type: 2}
   healDelayTime: 2
 --- !u!50 &9020014415093913887

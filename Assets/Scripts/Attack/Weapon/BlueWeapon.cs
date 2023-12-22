@@ -57,9 +57,7 @@ public class BlueWeapon : Weapon
         SwordTurn();
         DisableAttack();
         EnableCollision();
-        var entity = Instantiate(blueVisual, pencil.transform.position, transform.rotation);
-        // Remove
-        Destroy(entity, 2);
+        Instantiate(blueVisual, pencil.transform.position, transform.rotation);
         StartCoroutine(DisableColission());
         StartCoroutine(AllowAttack());
         yield return null;

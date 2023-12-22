@@ -22,6 +22,22 @@ public class LevelManager : MonoBehaviour
         EndLevelNoCards();
     }
 
+    public void LoseGame()
+    {
+        InterfaceSystem.Instance.DisableInterface();
+        InterfaceSystem.Instance.LoseGame();
+        AttributeManager.Instance.ResetAttributeManager();
+        HealthUI.Instance.UpdateHealth();
+    }
+
+    public void WinGame()
+    {
+        InterfaceSystem.Instance.DisableInterface();
+        InterfaceSystem.Instance.WinGame();
+        AttributeManager.Instance.ResetAttributeManager();
+        HealthUI.Instance.UpdateHealth();
+    }
+
     public void EndGame()
     {
         InterfaceSystem.Instance.DisableInterface();
@@ -34,7 +50,7 @@ public class LevelManager : MonoBehaviour
     {
         if (scenesTemp.Count <= 0)
         {
-            EndGame();
+            WinGame();
         } else
         {
             CardManager.Instance.CallCards();
