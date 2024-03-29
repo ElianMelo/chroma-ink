@@ -21,7 +21,10 @@ public class YellowSkill : Skill
 
     public IEnumerator ApplyDelay()
     {
-        WeaponsCDUI.Instance.yellowSkillCd = AttributeManager.Instance.yellowSkillDelay;
+        if (InputSystem.Instance.IsKeyboard())
+        {
+            WeaponsCDUI.Instance.yellowSkillCd = AttributeManager.Instance.yellowSkillDelay;
+        }
         yield return new WaitForSeconds(AttributeManager.Instance.yellowSkillDelay);
         canPerform = true;
     }
@@ -38,7 +41,10 @@ public class YellowSkill : Skill
         {
             StartCoroutine(PerformAttackCoroutine());
             pencil.PerformYellowSkill();
-            WeaponsCDUI.Instance.yellowSkillCd = AttributeManager.Instance.yellowSkillDuration;
+            if (InputSystem.Instance.IsKeyboard())
+            {
+                WeaponsCDUI.Instance.yellowSkillCd = AttributeManager.Instance.yellowSkillDuration;
+            }
         }
     }
 

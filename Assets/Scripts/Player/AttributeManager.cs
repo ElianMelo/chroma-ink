@@ -4,6 +4,9 @@ public class AttributeManager : MonoBehaviour
 {
     public static AttributeManager Instance;
 
+    public delegate void OnPause();
+    public static event OnPause onPauseEvent;
+
     [Header("System")]
     public bool paused;
 
@@ -56,6 +59,12 @@ public class AttributeManager : MonoBehaviour
     public float enemiesDamage;
 
     private AttributeManager baseAttribute;
+
+    public void SetPaused(bool isPaused)
+    {
+        paused = isPaused;
+        onPauseEvent?.Invoke();
+    }
 
     private void Awake()
     {

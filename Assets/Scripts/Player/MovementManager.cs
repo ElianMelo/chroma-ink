@@ -1,40 +1,48 @@
 using System.Collections;
 using UnityEngine;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class MovementManager : MonoBehaviour
 {
-    public bool canMove = true;
-    public bool canDash = true;
-    public float speed;
-    public float dashForce;
-    public float dashDuration;
-    public GameObject moveEffect;
+    [SerializeField] public bool canMove = true;
+    [SerializeField] public bool canDash = true;
+    [SerializeField] public float speed;
+    [SerializeField] public float dashForce;
+    [SerializeField] public float dashDuration;
+    [SerializeField] public GameObject moveEffect;
+    [SerializeField] public GameObject walkEffect;
+    [SerializeField] private Animator animator;
+    [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private float angleUpdateRate;
+    [SerializeField] private float moveLimiar;
 
     private bool receiveForce = false;
     private float xInput;
     private float yInput;
     private Rigidbody2D playerRb;
     private EchoEffect effect;
-    private Animator animator;
     private float h;
     private float v;
     private float baseSpeed;
+    private float targetAngle = 180f;
+    private IEnumerator RotateVisualsCoroutine;
+
+    private bool canWalkEffect = true;
+    private float walkEffectDelay = 0.1f;
 
     void Start()
     {
         baseSpeed = speed;
         playerRb = GetComponent<Rigidbody2D>();
         effect = GetComponent<EchoEffect>();
-        animator = this.GetComponent<Animator>();
-        animator.SetInteger("estado", 3);
     }
 
     private void Update()
     {
-        h = Input.GetAxis("Horizontal");
-        v = Input.GetAxis("Vertical");
+        h = InputSystem.Instance.Horizontal();
+        v = InputSystem.Instance.Vertical();
 
-        if (canDash && Input.GetKeyDown(KeyCode.Space))
+        if (canDash && InputSystem.Instance.Space())
         {
             StartDash();
         }
@@ -44,55 +52,28 @@ public class MovementManager : MonoBehaviour
     {
         if (AttributeManager.Instance.paused) { return; };
 
-        int estado = animator.GetInteger("estado");
-
         xInput = h;
         yInput = v;
 
-        if (h != 0)
+        if (h != 0 || v != 0)
         {
-            animator.speed = h < 0 ? h * -1 : h;
+            animator.SetBool("run", true);
         }
         else
         {
-            animator.speed = v < 0 ? v * -1 : v;
+            animator.SetBool("run", false);
         }
 
-        if (h > 0)
+        if(h < 0)
         {
-            if (estado != 4)
-            {
-                animator.SetInteger("estado", 4);
-            }
-        }
-        else if (h < 0)
+            if (RotateVisualsCoroutine != null) StopCoroutine(RotateVisualsCoroutine);
+            RotateVisualsCoroutine = RotateVisuals(true);
+            StartCoroutine(RotateVisualsCoroutine);
+        } else if(h > 0)
         {
-            if (estado != 2)
-            {
-                animator.SetInteger("estado", 2);
-            }
-        }
-        else if (v != 0)
-        {
-            if (estado == 3)
-            {
-                animator.SetInteger("estado", 4);
-            }
-            else if (estado == 1)
-            {
-                animator.SetInteger("estado", 2);
-            }
-        }
-        else
-        {
-            if (estado == 4)
-            {
-                animator.SetInteger("estado", 3);
-            }
-            else if (estado == 2)
-            {
-                animator.SetInteger("estado", 1);
-            }
+            if (RotateVisualsCoroutine != null) StopCoroutine(RotateVisualsCoroutine);
+            RotateVisualsCoroutine = RotateVisuals(false);
+            StartCoroutine(RotateVisualsCoroutine);
         }
 
         if (receiveForce) return;
@@ -100,6 +81,42 @@ public class MovementManager : MonoBehaviour
 
         if (!canMove) return;
         Move();
+
+        if (canWalkEffect && playerRb.velocity.magnitude > moveLimiar)
+        {
+            canWalkEffect = false;
+            var effect = Instantiate(walkEffect, this.transform.position, this.transform.rotation);
+            Destroy(effect, 1f);
+            StartCoroutine(ResetWalkEffect());
+        }
+    }
+
+    public IEnumerator ResetWalkEffect()
+    {
+        yield return new WaitForSeconds(walkEffectDelay);
+        canWalkEffect = true;
+    }
+
+    private IEnumerator RotateVisuals(bool isRight)
+    {
+        if(isRight)
+        {
+            while((spriteRenderer.transform.rotation * Quaternion.Euler(0f, angleUpdateRate, 0f)).eulerAngles.y <
+                targetAngle)
+            {
+                spriteRenderer.transform.rotation *= Quaternion.Euler(0f, angleUpdateRate, 0f);
+                yield return new WaitForSeconds(Time.deltaTime);
+            }
+        } else
+        {
+            while((spriteRenderer.transform.rotation * Quaternion.Euler(0f, -angleUpdateRate, 0f)).eulerAngles.y <
+                (targetAngle * 1.5f))
+            {
+                spriteRenderer.transform.rotation *= Quaternion.Euler(0f, -angleUpdateRate, 0f);
+                yield return new WaitForSeconds(Time.deltaTime);
+            }
+        }
+        yield return null;
     }
 
     public void StopPlayer()
@@ -189,7 +206,10 @@ public class MovementManager : MonoBehaviour
 
     private IEnumerator RestoreDash()
     {
-        WeaponsCDUI.Instance.dashCd = AttributeManager.Instance.dashRecover;
+        if (InputSystem.Instance.IsKeyboard())
+        {
+            WeaponsCDUI.Instance.dashCd = AttributeManager.Instance.dashRecover;
+        }
         yield return new WaitForSeconds(AttributeManager.Instance.dashRecover);
         canDash = true;
     }

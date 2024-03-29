@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: EnemySpawnerData
   m_EditorClassIdentifier: 
   spawnRate: 0.5
-  waveQty: 3
-  waveEnemySpawnQtyMax: 4
-  waveEnemyQty: 10
+  waveQty: 2
+  waveEnemySpawnQtyMax: 3
+  waveEnemyQty: 5
   incrementWaveSpawnSize: 1
-  incrementWaveEnemyMax: 10
+  incrementWaveEnemyMax: 5

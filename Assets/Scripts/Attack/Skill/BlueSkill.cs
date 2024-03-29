@@ -9,10 +9,16 @@ public class BlueSkill : Skill
     public float disableDelay = 0.2f;
     public float startDelay = 0.1f;
     private bool canAttack = true;
+    private Camera mainCamera;
+
+    private void Start()
+    {
+        mainCamera = Camera.main;
+    }
 
     public void SwordTurn()
     {
-        Vector2 result = Camera.main.ScreenToWorldPoint(Input.mousePosition) - this.transform.position;
+        Vector2 result = InputSystem.Instance.MousePosWorldPoint(mainCamera, this.transform) - this.transform.position;
         this.transform.rotation = (Quaternion.Euler(0f, 0f, Mathf.Atan2(result.y, result.x) * Mathf.Rad2Deg));
         this.transform.Rotate(0, 0, -90);
     }
@@ -55,7 +61,10 @@ public class BlueSkill : Skill
         EnableCollision();
         Instantiate(blueVisual, hitCollider.transform.position, transform.rotation);
         StartCoroutine(DisableColission());
-        WeaponsCDUI.Instance.blueSkillCd = AttributeManager.Instance.blueSkillDelay;
+        if (InputSystem.Instance.IsKeyboard())
+        {
+            WeaponsCDUI.Instance.blueSkillCd = AttributeManager.Instance.blueSkillDelay;
+        }
         StartCoroutine(AllowAttack());
         yield return null;
     }

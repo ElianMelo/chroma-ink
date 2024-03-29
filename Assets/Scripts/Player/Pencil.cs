@@ -9,9 +9,13 @@ public class Pencil : MonoBehaviour
     public GameObject redTrail;
     public GameObject blueTrail;
     public GameObject yellowTrail;
+    public Sprite redPencil;
+    public Sprite bluePencil;
+    public Sprite yellowPencil;
     public float speed;
     public float playerOffsetValue;
 
+    private SpriteRenderer spriteRenderer;
     private Vector3 playerOffset;
     private bool followingPlayer = true;
     private bool startPosition = false;
@@ -57,6 +61,15 @@ public class Pencil : MonoBehaviour
     public float yellowStartSkillLength = 2f;
     public float yellowSkillLength = 2f;
     public float yellowSkillRange = 45f;
+
+    private Camera mainCamera;
+
+    private void Start()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        mainCamera = Camera.main;
+        spriteRenderer.sprite = redPencil;
+    }
 
     void FixedUpdate()
     {
@@ -152,18 +165,21 @@ public class Pencil : MonoBehaviour
     {
         currentTrail.SetActive(false);
         currentTrail = redTrail;
+        spriteRenderer.sprite = redPencil;
         currentTrail.SetActive(true);
     }
     public void ChangeTrailBlue()
     {
         currentTrail.SetActive(false);
         currentTrail = blueTrail;
+        spriteRenderer.sprite = bluePencil;
         currentTrail.SetActive(true);
     }
     public void ChangeTrailYellow()
     {
         currentTrail.SetActive(false);
         currentTrail = yellowTrail;
+        spriteRenderer.sprite = yellowPencil;
         currentTrail.SetActive(true);
     }
 
@@ -176,7 +192,7 @@ public class Pencil : MonoBehaviour
 
         transform.position = Vector3.MoveTowards(transform.position, player.transform.position + playerOffset, speed);
 
-        Vector2 result = Camera.main.ScreenToWorldPoint(Input.mousePosition) - player.transform.position;
+        Vector2 result = InputSystem.Instance.MousePosWorldPoint(mainCamera, this.transform) - player.transform.position;
 
         this.transform.rotation = (Quaternion.Euler(0f, 0f, Mathf.Atan2(result.y, result.x) * Mathf.Rad2Deg));
         this.transform.Rotate(0, 0, -90);
@@ -189,7 +205,7 @@ public class Pencil : MonoBehaviour
             startPosition = false;
 
             // Calculate Rotation
-            Vector2 resultStartPos = Camera.main.ScreenToWorldPoint(Input.mousePosition) - player.transform.position;
+            Vector2 resultStartPos = InputSystem.Instance.MousePosWorldPoint(mainCamera, this.transform) - player.transform.position;
 
             this.transform.rotation = (Quaternion.Euler(0f, 0f,
                 (Mathf.Atan2(resultStartPos.y, resultStartPos.x) * Mathf.Rad2Deg) + redAttackRange));
@@ -209,7 +225,7 @@ public class Pencil : MonoBehaviour
         if (redAttackLength < (redStartAttackLength / 2))
         {
             // Calculate Rotation
-            Vector2 resultStartPos = Camera.main.ScreenToWorldPoint(Input.mousePosition) - player.transform.position;
+            Vector2 resultStartPos = InputSystem.Instance.MousePosWorldPoint(mainCamera, this.transform) - player.transform.position;
 
             this.transform.rotation = (Quaternion.Euler(0f, 0f,
                 (Mathf.Atan2(resultStartPos.y, resultStartPos.x) * Mathf.Rad2Deg) + (360 - redAttackRange)));
@@ -241,7 +257,7 @@ public class Pencil : MonoBehaviour
             startPosition = false;
 
             // Calculate Rotation
-            Vector2 resultStartPos = Camera.main.ScreenToWorldPoint(Input.mousePosition) - player.transform.position;
+            Vector2 resultStartPos = InputSystem.Instance.MousePosWorldPoint(mainCamera, this.transform) - player.transform.position;
 
             this.transform.rotation = (Quaternion.Euler(0f, 0f,
                 (Mathf.Atan2(resultStartPos.y, resultStartPos.x) * Mathf.Rad2Deg)));
@@ -261,7 +277,7 @@ public class Pencil : MonoBehaviour
         if (redSkillLength < (redStartSkillLength / 2) && redSkillLength > (redStartSkillLength / 3))
         {
             // Calculate Rotation
-            Vector2 resultStartPos = Camera.main.ScreenToWorldPoint(Input.mousePosition) - player.transform.position;
+            Vector2 resultStartPos = InputSystem.Instance.MousePosWorldPoint(mainCamera, this.transform) - player.transform.position;
 
             this.transform.rotation = (Quaternion.Euler(0f, 0f,
                 (Mathf.Atan2(resultStartPos.y, resultStartPos.x) * Mathf.Rad2Deg) + (90 - redSkillRange)));
@@ -279,7 +295,7 @@ public class Pencil : MonoBehaviour
         if (redSkillLength < (redStartSkillLength / 3) && redSkillLength > (redStartSkillLength / 4))
         {
             // Calculate Rotation
-            Vector2 resultStartPos = Camera.main.ScreenToWorldPoint(Input.mousePosition) - player.transform.position;
+            Vector2 resultStartPos = InputSystem.Instance.MousePosWorldPoint(mainCamera, this.transform) - player.transform.position;
 
             this.transform.rotation = (Quaternion.Euler(0f, 0f,
                 (Mathf.Atan2(resultStartPos.y, resultStartPos.x) * Mathf.Rad2Deg) + (redSkillRange + 2)));
@@ -297,7 +313,7 @@ public class Pencil : MonoBehaviour
         if (redSkillLength < (redStartSkillLength / 4) && redSkillLength > (redStartSkillLength / 5))
         {
             // Calculate Rotation
-            Vector2 resultStartPos = Camera.main.ScreenToWorldPoint(Input.mousePosition) - player.transform.position;
+            Vector2 resultStartPos = InputSystem.Instance.MousePosWorldPoint(mainCamera, this.transform) - player.transform.position;
 
             this.transform.rotation = (Quaternion.Euler(0f, 0f,
                 (Mathf.Atan2(resultStartPos.y, resultStartPos.x) * Mathf.Rad2Deg) + (270 - redSkillRange)));
@@ -329,7 +345,7 @@ public class Pencil : MonoBehaviour
             startPosition = false;
 
             // Calculate Rotation
-            Vector2 resultStartPos = Camera.main.ScreenToWorldPoint(Input.mousePosition) - player.transform.position;
+            Vector2 resultStartPos = InputSystem.Instance.MousePosWorldPoint(mainCamera, this.transform) - player.transform.position;
 
             this.transform.rotation = (Quaternion.Euler(0f, 0f,
                 (Mathf.Atan2(resultStartPos.y, resultStartPos.x) * Mathf.Rad2Deg)));
@@ -349,7 +365,7 @@ public class Pencil : MonoBehaviour
         if (blueAttackLength < (blueStartAttackLength / 2))
         {
             // Calculate Rotation
-            Vector2 resultStartPos = Camera.main.ScreenToWorldPoint(Input.mousePosition) - player.transform.position;
+            Vector2 resultStartPos = InputSystem.Instance.MousePosWorldPoint(mainCamera, this.transform) - player.transform.position;
 
             this.transform.rotation = (Quaternion.Euler(0f, 0f,
                 (Mathf.Atan2(resultStartPos.y, resultStartPos.x) * Mathf.Rad2Deg)));
@@ -381,7 +397,7 @@ public class Pencil : MonoBehaviour
             startPosition = false;
 
             // Calculate Rotation
-            Vector2 resultStartPos = Camera.main.ScreenToWorldPoint(Input.mousePosition) - player.transform.position;
+            Vector2 resultStartPos = InputSystem.Instance.MousePosWorldPoint(mainCamera, this.transform) - player.transform.position;
 
             this.transform.rotation = (Quaternion.Euler(0f, 0f,
                 (Mathf.Atan2(resultStartPos.y, resultStartPos.x) * Mathf.Rad2Deg)));
@@ -401,7 +417,7 @@ public class Pencil : MonoBehaviour
         if (blueSkillLength < (blueStartSkillLength / 2) && blueSkillLength > (blueStartSkillLength / 3))
         {
             // Calculate Rotation
-            Vector2 resultStartPos = Camera.main.ScreenToWorldPoint(Input.mousePosition) - player.transform.position;
+            Vector2 resultStartPos = InputSystem.Instance.MousePosWorldPoint(mainCamera, this.transform) - player.transform.position;
 
             this.transform.rotation = (Quaternion.Euler(0f, 0f,
                 (Mathf.Atan2(resultStartPos.y, resultStartPos.x) * Mathf.Rad2Deg) + (90 - blueSkillRange)));
@@ -419,7 +435,7 @@ public class Pencil : MonoBehaviour
         if (blueSkillLength < (blueStartSkillLength / 3) && blueSkillLength > (blueStartSkillLength / 4))
         {
             // Calculate Rotation
-            Vector2 resultStartPos = Camera.main.ScreenToWorldPoint(Input.mousePosition) - player.transform.position;
+            Vector2 resultStartPos = InputSystem.Instance.MousePosWorldPoint(mainCamera, this.transform) - player.transform.position;
 
             this.transform.rotation = (Quaternion.Euler(0f, 0f,
                 (Mathf.Atan2(resultStartPos.y, resultStartPos.x) * Mathf.Rad2Deg) + (blueSkillRange + 2)));
@@ -437,7 +453,7 @@ public class Pencil : MonoBehaviour
         if (blueSkillLength < (blueStartSkillLength / 4) && blueSkillLength > (blueStartSkillLength / 5))
         {
             // Calculate Rotation
-            Vector2 resultStartPos = Camera.main.ScreenToWorldPoint(Input.mousePosition) - player.transform.position;
+            Vector2 resultStartPos = InputSystem.Instance.MousePosWorldPoint(mainCamera, this.transform) - player.transform.position;
 
             this.transform.rotation = (Quaternion.Euler(0f, 0f,
                 (Mathf.Atan2(resultStartPos.y, resultStartPos.x) * Mathf.Rad2Deg) + (270 - blueSkillRange)));
@@ -468,7 +484,7 @@ public class Pencil : MonoBehaviour
             startPosition = false;
 
             // Calculate Rotation
-            Vector2 resultStartPos = Camera.main.ScreenToWorldPoint(Input.mousePosition) - player.transform.position;
+            Vector2 resultStartPos = InputSystem.Instance.MousePosWorldPoint(mainCamera, this.transform) - player.transform.position;
 
             this.transform.rotation = (Quaternion.Euler(0f, 0f,
                 (Mathf.Atan2(resultStartPos.y, resultStartPos.x) * Mathf.Rad2Deg) + yellowAttackRange));
@@ -488,7 +504,7 @@ public class Pencil : MonoBehaviour
         if (yellowAttackLength < (yellowStartAttackLength / 2))
         {
             // Calculate Rotation
-            Vector2 resultStartPos = Camera.main.ScreenToWorldPoint(Input.mousePosition) - player.transform.position;
+            Vector2 resultStartPos = InputSystem.Instance.MousePosWorldPoint(mainCamera, this.transform) - player.transform.position;
 
             this.transform.rotation = (Quaternion.Euler(0f, 0f,
                 (Mathf.Atan2(resultStartPos.y, resultStartPos.x) * Mathf.Rad2Deg) + (360 - yellowAttackRange)));
@@ -520,7 +536,7 @@ public class Pencil : MonoBehaviour
             startPosition = false;
 
             // Calculate Rotation
-            Vector2 resultStartPos = Camera.main.ScreenToWorldPoint(Input.mousePosition) - player.transform.position;
+            Vector2 resultStartPos = InputSystem.Instance.MousePosWorldPoint(mainCamera, this.transform) - player.transform.position;
 
             this.transform.rotation = (Quaternion.Euler(0f, 0f,
                 (Mathf.Atan2(resultStartPos.y, resultStartPos.x) * Mathf.Rad2Deg)));
@@ -540,7 +556,7 @@ public class Pencil : MonoBehaviour
         if (yellowSkillLength < (yellowStartSkillLength / 2) && yellowSkillLength > (yellowStartSkillLength / 3))
         {
             // Calculate Rotation
-            Vector2 resultStartPos = Camera.main.ScreenToWorldPoint(Input.mousePosition) - player.transform.position;
+            Vector2 resultStartPos = InputSystem.Instance.MousePosWorldPoint(mainCamera, this.transform) - player.transform.position;
 
             this.transform.rotation = (Quaternion.Euler(0f, 0f,
                 (Mathf.Atan2(resultStartPos.y, resultStartPos.x) * Mathf.Rad2Deg) + (90 - yellowSkillRange)));
@@ -558,7 +574,7 @@ public class Pencil : MonoBehaviour
         if (yellowSkillLength < (yellowStartSkillLength / 3) && yellowSkillLength > (yellowStartSkillLength / 4))
         {
             // Calculate Rotation
-            Vector2 resultStartPos = Camera.main.ScreenToWorldPoint(Input.mousePosition) - player.transform.position;
+            Vector2 resultStartPos = InputSystem.Instance.MousePosWorldPoint(mainCamera, this.transform) - player.transform.position;
 
             this.transform.rotation = (Quaternion.Euler(0f, 0f,
                 (Mathf.Atan2(resultStartPos.y, resultStartPos.x) * Mathf.Rad2Deg) + (yellowSkillRange + 2)));
@@ -576,7 +592,7 @@ public class Pencil : MonoBehaviour
         if (yellowSkillLength < (yellowStartSkillLength / 4) && yellowSkillLength > (yellowStartSkillLength / 5))
         {
             // Calculate Rotation
-            Vector2 resultStartPos = Camera.main.ScreenToWorldPoint(Input.mousePosition) - player.transform.position;
+            Vector2 resultStartPos = InputSystem.Instance.MousePosWorldPoint(mainCamera, this.transform) - player.transform.position;
 
             this.transform.rotation = (Quaternion.Euler(0f, 0f,
                 (Mathf.Atan2(resultStartPos.y, resultStartPos.x) * Mathf.Rad2Deg) + (270 - yellowSkillRange)));

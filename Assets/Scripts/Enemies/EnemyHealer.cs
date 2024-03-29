@@ -1,17 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyHealer : Enemy
 {
     public float healDelayTime = 2f;
+    public float radius = 100f;
     private bool canPerform = true;
-    private GameObject healCollider;
+    [SerializeField] private GameObject healCollider;
+    [SerializeField] private GameObject lifeParticle;
 
     protected override void Start()
     {
-        healCollider = transform.Find("HealCollider")?.gameObject;
         base.Start();
         target = null;
 
@@ -34,6 +34,11 @@ public class EnemyHealer : Enemy
     IEnumerator HealDelay(float DelayTime)
     {
         healCollider.SetActive(true);
+
+        var particle = Instantiate(lifeParticle, this.transform.position, Quaternion.identity).GetComponent<ParticleSystem>();
+        particle.Play();
+        Destroy(particle.gameObject, 2f);
+
         yield return new WaitForSeconds(.2f);
         healCollider.SetActive(false);
         FindEnemy();
@@ -43,7 +48,23 @@ public class EnemyHealer : Enemy
 
     private void FindEnemy()
     {
-        GameObject[] EnemiesOnScene = GameObject.FindGameObjectsWithTag("Enemy");
+        List<GameObject> EnemiesOnScene = new List<GameObject>();
+
+        RaycastHit2D[] hits = Physics2D.CircleCastAll(new Vector2(transform.position.x, transform.position.y), 
+            radius, Vector2.right, radius, collisionLayerMask);
+
+        foreach (var hit in hits)
+        {
+            GameObject obj = hit.collider.gameObject;
+            if (obj.TryGetComponent(out Enemy enemy))
+            {
+                if(enemy != this)
+                {
+                    EnemiesOnScene.Add(obj);
+                }
+            }
+        }
+
         var minDistance = Mathf.Infinity;
         Transform targetToFollow = null;
 
@@ -63,7 +84,17 @@ public class EnemyHealer : Enemy
 
         if(targetToFollow == null)
         {
-            target = FindObjectOfType<PlayerManager>().gameObject.transform;
+            RaycastHit2D[] hitsPlayer = Physics2D.CircleCastAll(new Vector2(transform.position.x, transform.position.y),
+            radius, Vector2.right, radius, collisionLayerMask);
+
+            foreach (var hit in hitsPlayer)
+            {
+                GameObject obj = hit.collider.gameObject;
+                if (obj.TryGetComponent(out PlayerManager playerManager))
+                {
+                    target = playerManager.gameObject.transform;
+                }
+            }
         } else
         {
             target = targetToFollow;

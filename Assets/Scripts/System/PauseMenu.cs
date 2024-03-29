@@ -9,7 +9,7 @@ public class PauseMenu : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && SceneManager.GetActiveScene().name != "Menu")
+        if (InputSystem.Instance.Escape() && SceneManager.GetActiveScene().name != "Menu")
         {
             Pause();
         }
@@ -17,14 +17,14 @@ public class PauseMenu : MonoBehaviour
 
     public void Pause()
     {
-        AttributeManager.Instance.paused = true;
+        AttributeManager.Instance.SetPaused(true);
         Time.timeScale = 0;
         pauseCanvas.SetActive(true);
     }
 
     public void Continue()
     {
-        AttributeManager.Instance.paused = false;
+        AttributeManager.Instance.SetPaused(false);
         Time.timeScale = 1;
         pauseCanvas.SetActive(false);
     }

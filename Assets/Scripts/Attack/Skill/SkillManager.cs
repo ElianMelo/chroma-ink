@@ -21,17 +21,17 @@ public class SkillManager : MonoBehaviour
     void Update()
     {
         if (AttributeManager.Instance.paused) { return; };
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (InputSystem.Instance.Button1())
         {
             currentSkill = redSkill;
             pencil.ChangeTrailRed();
         }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
+        if (InputSystem.Instance.Button2())
         {
             currentSkill = blueSkill;
             pencil.ChangeTrailBlue();
         }
-        if (Input.GetKeyDown(KeyCode.Alpha3))
+        if (InputSystem.Instance.Button3())
         {
             currentSkill = yellowSkill;
             pencil.ChangeTrailYellow();

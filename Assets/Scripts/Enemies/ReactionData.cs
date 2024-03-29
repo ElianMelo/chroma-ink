@@ -7,6 +7,10 @@ public class ReactionData : ScriptableObject
 {
     public GameObject floatingText;
     public GameObject redParticle;
+    public GameObject redHitEffect;
     public GameObject blueParticle;
+    public GameObject blueHitEffect;
     public GameObject yellowParticle;
+    public GameObject yellowHitEffect;
+    public float intensity;
 }

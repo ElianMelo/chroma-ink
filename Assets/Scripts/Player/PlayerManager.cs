@@ -5,12 +5,47 @@ using UnityEngine;
 public class PlayerManager : ReceiveEffect
 {
     public GameObject floatingText;
+    public SpriteRenderer pencil;
+    public SpriteRenderer crosshair;
+    [SerializeField] private SpriteRenderer sprite;
+    [SerializeField] private GameObject playerHitEffect;
 
     private MovementManager movementManager;
 
     private void Awake()
     {
         movementManager = GetComponent<MovementManager>();
+    }
+
+    private void OnEnable()
+    {
+        AttributeManager.onPauseEvent += OnPauseEvent;
+    }
+
+    private void OnDisable()
+    {
+        AttributeManager.onPauseEvent -= OnPauseEvent;
+    }
+
+    private void OnPauseEvent()
+    {
+        if (AttributeManager.Instance.paused)
+        {
+            Color color = pencil.color;
+            color.a = 0f;
+            pencil.color = color;
+            crosshair.color = color;
+        }
+        else
+        {
+            Color color = pencil.color;
+            color.a = 1f;
+            pencil.color = color;
+            if (InputSystem.Instance.IsKeyboard())
+            {
+                crosshair.color = color;
+            }
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -25,9 +60,14 @@ public class PlayerManager : ReceiveEffect
             HealthUI.Instance.UpdateHealth();
 
             var text = Instantiate(floatingText, this.transform.position, Quaternion.identity).GetComponent<FloatingText>();
+
+            Camera.main.GetComponent<CameraController>().Shake(.15f, 0.2f);
             text.transform.SetParent(this.transform);
             text.SetColor(TextColors.WHITE);
             text.ChangeText(AttributeManager.Instance.enemiesDamage.ToString());
+
+            var instHitEffect = Instantiate(playerHitEffect, this.transform.position, Quaternion.identity);
+            Destroy(instHitEffect.gameObject, 1f);
 
             StartCoroutine(TakeHit(collision.transform.position));
         }
@@ -35,7 +75,6 @@ public class PlayerManager : ReceiveEffect
 
     private IEnumerator TakeHit(Vector3 otherPosition)
     {
-        SpriteRenderer sprite = this.GetComponent<SpriteRenderer>();
         Color color = sprite.color;
         color.a = 0.4f;
         sprite.color = color;

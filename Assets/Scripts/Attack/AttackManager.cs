@@ -18,11 +18,11 @@ public class AttackManager : MonoBehaviour
     void Update()
     {
         if (AttributeManager.Instance.paused) { return; };
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        if (InputSystem.Instance.MouseLeft())
         {
             weaponManager.currentWeapon.PermformAttack(pencil);
         }
-        if (Input.GetKeyDown(KeyCode.Mouse1))
+        if (InputSystem.Instance.MouseRight())
         {
             skillManager.currentSkill.PermformSkill(pencil);
         }

@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using static UnityEngine.ParticleSystem;
 
 public class Enemy : ReceiveEffect
 {
@@ -11,6 +12,9 @@ public class Enemy : ReceiveEffect
     public float life = 200f;
     public float speed = 5f;
     public ReactionData reactionData;
+    public float angleUpdateRate;
+    public SpriteRenderer spriteVisuals;
+    public LayerMask collisionLayerMask;
     protected EnemyHealthUI hpBar;
     protected Transform target;
     protected NavMeshAgent agent;
@@ -23,6 +27,8 @@ public class Enemy : ReceiveEffect
     protected Vector3 velocity = Vector3.zero;
     protected float smoothTime = 0.3F;
     protected bool canTakeDamage = true;
+    protected IEnumerator RotateVisualsCoroutine;
+    protected float targetAngle = 180f;
 
     protected virtual void Start()
     {
@@ -56,8 +62,20 @@ public class Enemy : ReceiveEffect
             color = TextColors.RED;
 
             var particle = Instantiate(reactionData.redParticle, this.transform.position, Quaternion.identity).GetComponent<ParticleSystem>();
+            var velocityOverLifetime = particle.velocityOverLifetime;
+
+            Vector3 direction = transform.position - collision.transform.position;
+            direction = direction.normalized;
+
+            velocityOverLifetime.enabled = true;
+            velocityOverLifetime.x = direction.x * reactionData.intensity;
+            velocityOverLifetime.y = direction.y * reactionData.intensity;
+
             particle.Play();
             Destroy(particle.gameObject, 1f);
+
+            var instHitEffect = Instantiate(reactionData.redHitEffect, this.transform.position, Quaternion.identity);
+            Destroy(instHitEffect.gameObject, 1f);
         }
 
         if (collision.CompareTag("RedSkill"))
@@ -69,8 +87,20 @@ public class Enemy : ReceiveEffect
             increment = true;
 
             var particle = Instantiate(reactionData.redParticle, this.transform.position, Quaternion.identity).GetComponent<ParticleSystem>();
+            var velocityOverLifetime = particle.velocityOverLifetime;
+
+            Vector3 direction = transform.position - collision.transform.position;
+            direction = direction.normalized;
+
+            velocityOverLifetime.enabled = true;
+            velocityOverLifetime.x = direction.x * reactionData.intensity;
+            velocityOverLifetime.y = direction.y * reactionData.intensity;
+
             particle.Play();
             Destroy(particle.gameObject, 1f);
+
+            var instHitEffect = Instantiate(reactionData.redHitEffect, this.transform.position, Quaternion.identity);
+            Destroy(instHitEffect.gameObject, 1f);
         }
 
         if (collision.CompareTag("BlueAttack"))
@@ -81,8 +111,20 @@ public class Enemy : ReceiveEffect
             color = TextColors.BLUE;
 
             var particle = Instantiate(reactionData.blueParticle, this.transform.position, Quaternion.identity).GetComponent<ParticleSystem>();
+            var velocityOverLifetime = particle.velocityOverLifetime;
+
+            Vector3 direction = transform.position - collision.transform.position;
+            direction = direction.normalized;
+
+            velocityOverLifetime.enabled = true;
+            velocityOverLifetime.x = direction.x * reactionData.intensity;
+            velocityOverLifetime.y = direction.y * reactionData.intensity;
+
             particle.Play();
             Destroy(particle.gameObject, 1f);
+
+            var instHitEffect = Instantiate(reactionData.blueHitEffect, this.transform.position, Quaternion.identity);
+            Destroy(instHitEffect.gameObject, 1f);
         }
 
         if (collision.CompareTag("BlueSkill"))
@@ -95,8 +137,20 @@ public class Enemy : ReceiveEffect
             increment = true;
 
             var particle = Instantiate(reactionData.blueParticle, this.transform.position, Quaternion.identity).GetComponent<ParticleSystem>();
+            var velocityOverLifetime = particle.velocityOverLifetime;
+
+            Vector3 direction = transform.position - collision.transform.position;
+            direction = direction.normalized;
+
+            velocityOverLifetime.enabled = true;
+            velocityOverLifetime.x = direction.x * reactionData.intensity;
+            velocityOverLifetime.y = direction.y * reactionData.intensity;
+
             particle.Play();
             Destroy(particle.gameObject, 1f);
+
+            var instHitEffect = Instantiate(reactionData.blueHitEffect, this.transform.position, Quaternion.identity);
+            Destroy(instHitEffect.gameObject, 1f);
         }
 
         if (collision.CompareTag("YellowAttack"))
@@ -107,8 +161,20 @@ public class Enemy : ReceiveEffect
             color = TextColors.YELLOW;
 
             var particle = Instantiate(reactionData.yellowParticle, this.transform.position, Quaternion.identity).GetComponent<ParticleSystem>();
+            var velocityOverLifetime = particle.velocityOverLifetime;
+
+            Vector3 direction = transform.position - collision.transform.position;
+            direction = direction.normalized;
+
+            velocityOverLifetime.enabled = true;
+            velocityOverLifetime.x = direction.x * reactionData.intensity;
+            velocityOverLifetime.y = direction.y * reactionData.intensity;
+
             Destroy(particle.gameObject, 1f);
             particle.Play();
+
+            var instHitEffect = Instantiate(reactionData.yellowHitEffect, this.transform.position, Quaternion.identity);
+            Destroy(instHitEffect.gameObject, 1f);
         }
 
         if(collision.CompareTag("HealCollider"))
@@ -140,16 +206,15 @@ public class Enemy : ReceiveEffect
     private IEnumerator TakeHit(Vector3 otherPosition)
     {
         canTakeDamage = false;
-        SpriteRenderer sprite = this.GetComponent<SpriteRenderer>();
-        Color color = sprite.color;
+        Color color = spriteVisuals.color;
         color.a = 0.4f;
-        sprite.color = color;
+        spriteVisuals.color = color;
         this.enemyRb.AddForce((this.transform.position - otherPosition).normalized * 
             3f, ForceMode2D.Impulse);
         yield return new WaitForSeconds(0.2f);
         canTakeDamage = true;
         color.a = 1f;
-        sprite.color = color;
+        spriteVisuals.color = color;
         yield return null;
     }
 
@@ -157,6 +222,7 @@ public class Enemy : ReceiveEffect
     {
         Destroy(hpBar.gameObject);
         isDead = true;
+        GetComponent<Collider2D>().enabled = false;
         target = null;
         speed = 0;
         onDeathEvent?.Invoke();
@@ -172,8 +238,22 @@ public class Enemy : ReceiveEffect
             return;
         }
         agent.speed = speed;
+
         if (target != null)
         {
+            if ((transform.position - target.position).normalized.x > 0)
+            {
+                if (RotateVisualsCoroutine != null) StopCoroutine(RotateVisualsCoroutine);
+                RotateVisualsCoroutine = RotateVisuals(true);
+                StartCoroutine(RotateVisualsCoroutine);
+            }
+            else if ((transform.position - target.position).normalized.x < 0)
+            {
+                if (RotateVisualsCoroutine != null) StopCoroutine(RotateVisualsCoroutine);
+                RotateVisualsCoroutine = RotateVisuals(false);
+                StartCoroutine(RotateVisualsCoroutine);
+            }
+
             float distanceToTarget = Vector3.Distance(transform.position, target.position);
 
             if (ShouldChase(distanceToTarget))
@@ -192,6 +272,29 @@ public class Enemy : ReceiveEffect
                 transform.position = Vector3.SmoothDamp(transform.position, agent.nextPosition, ref velocity, smoothTime);
             }
         }
+    }
+
+    private IEnumerator RotateVisuals(bool isRight)
+    {
+        if (isRight)
+        {
+            while ((spriteVisuals.transform.rotation * Quaternion.Euler(0f, angleUpdateRate, 0f)).eulerAngles.y <
+                targetAngle)
+            {
+                spriteVisuals.transform.rotation *= Quaternion.Euler(0f, angleUpdateRate, 0f);
+                yield return new WaitForSeconds(Time.deltaTime);
+            }
+        }
+        else
+        {
+            while ((spriteVisuals.transform.rotation * Quaternion.Euler(0f, -angleUpdateRate, 0f)).eulerAngles.y <
+                (targetAngle * 1.5f))
+            {
+                spriteVisuals.transform.rotation *= Quaternion.Euler(0f, -angleUpdateRate, 0f);
+                yield return new WaitForSeconds(Time.deltaTime);
+            }
+        }
+        yield return null;
     }
 
     protected virtual bool ShouldChase(float distanceToTarget)

@@ -21,7 +21,8 @@ public class CardManager : MonoBehaviour
 
     public void CallCards()
     {
-        AttributeManager.Instance.paused = true;
+        AttributeManager.Instance.SetPaused(true);
+        InterfaceSystem.Instance.DisableInterface();
         board.gameObject.SetActive(true);
         board.SetBoard();
     }

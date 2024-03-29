@@ -5,7 +5,7 @@ public class Projectile : MonoBehaviour
     private float speed = 10;
     private Rigidbody2D rb;
     private Vector2 dir;
-    private PlayerManager player;
+    private PlayerManager player;  
 
     public void Awake()
     {
@@ -29,7 +29,7 @@ public class Projectile : MonoBehaviour
 
     public Vector2 MouseDirection()
     {
-        return Camera.main.ScreenToWorldPoint(Input.mousePosition) - player.transform.position;
+        return InputSystem.Instance.MousePosWorldPoint(Camera.main, this.transform) - player.transform.position;
     }
 
     public void DestroyProjectile()

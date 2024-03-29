@@ -55,7 +55,7 @@ public class CardBoard : MonoBehaviour
         if (selectedCard == null) return;
         cardManager.AddAttributeCard(selectedCard);
         this.gameObject.SetActive(false);
-        AttributeManager.Instance.paused = false;
+        AttributeManager.Instance.SetPaused(false);
         LevelManager.Instance.EndLevelNoCards();
     }
 

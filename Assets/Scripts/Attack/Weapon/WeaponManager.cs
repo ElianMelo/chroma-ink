@@ -22,17 +22,17 @@ public class WeaponManager : MonoBehaviour
     void Update()
     {
         if (AttributeManager.Instance.paused) { return; };
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (InputSystem.Instance.Button1())
         {
             currentWeapon = redWeapon;
             pencil.ChangeTrailRed();
         }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
+        if (InputSystem.Instance.Button2())
         {
             currentWeapon = blueWeapon;
             pencil.ChangeTrailBlue();
         }
-        if (Input.GetKeyDown(KeyCode.Alpha3))
+        if (InputSystem.Instance.Button3())
         {
             currentWeapon = yellowWeapon;
             pencil.ChangeTrailYellow();

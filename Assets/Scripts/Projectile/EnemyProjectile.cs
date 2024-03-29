@@ -25,7 +25,8 @@ public class EnemyProjectile : MonoBehaviour
     private void Start()
     {
         dir = (target.position - transform.position).normalized;
-        rb.AddForce(dir * speed, ForceMode2D.Impulse);
+        transform.right = dir;
+        rb.AddForce(transform.right * speed, ForceMode2D.Impulse);
         Invoke("DestroyProjectile", 2);
     }
 

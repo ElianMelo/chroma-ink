@@ -8,6 +8,7 @@ public class InterfaceSystem : MonoBehaviour
 {
     public static InterfaceSystem Instance;
     public GameObject cooldownInterface;
+    public GameObject mobileInterface;
     public GameObject hpInterface;
     public GameObject levelName;
 
@@ -23,7 +24,18 @@ public class InterfaceSystem : MonoBehaviour
     }
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        SetLevelName(scene.name);
+        var name = "";
+        if(scene.name == "FlowerField")
+        {
+            name = "Flower Field";
+        } else if(scene.name == "DesertParadise")
+        {
+            name = "Desert Paradise";
+        } else if(scene.name == "NightShift")
+        {
+            name = "Night Shift";
+        }
+        SetLevelName(name);
     }
     private void SetLevelName(string text)
     {
@@ -57,12 +69,24 @@ public class InterfaceSystem : MonoBehaviour
 
     public void EnableInterface()
     {
-        cooldownInterface.SetActive(true);
+        if(InputSystem.Instance.IsKeyboard())
+        {
+            cooldownInterface.SetActive(true);
+        } else
+        {
+            mobileInterface.SetActive(true);
+        }
         hpInterface.SetActive(true);
     }
     public void DisableInterface()
     {
-        cooldownInterface.SetActive(false);
+        if (InputSystem.Instance.IsKeyboard())
+        {
+            cooldownInterface.SetActive(false);
+        } else
+        {
+            mobileInterface.SetActive(false);
+        }
         hpInterface.SetActive(false);
     }
 }

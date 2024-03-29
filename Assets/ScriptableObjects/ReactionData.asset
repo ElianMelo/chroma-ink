@@ -14,5 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   floatingText: {fileID: 4366111507209884202, guid: d5e0bf6eb22fa434e93340eb7a7f6020, type: 3}
   redParticle: {fileID: 5798124799646210620, guid: 9ea3427ed9d6a0a4780063bbb04970ca, type: 3}
+  redHitEffect: {fileID: 3083301319712512496, guid: afce44d768f996f48a9284bc56ca0424, type: 3}
   blueParticle: {fileID: 5798124799646210620, guid: 35b196bf311f01346b5e26c9e14ee1f6, type: 3}
+  blueHitEffect: {fileID: 3083301319712512496, guid: 5da667db7859ce14e9429e1f00f304cd, type: 3}
   yellowParticle: {fileID: 5798124799646210620, guid: fe6a9e138322dca4cba132d109020915, type: 3}
+  yellowHitEffect: {fileID: 3083301319712512496, guid: 87807313d94f76e4e984e31791d455bb, type: 3}
+  intensity: 5

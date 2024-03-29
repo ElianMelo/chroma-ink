@@ -21,9 +21,11 @@ public class CameraController : MonoBehaviour
         target = FindObjectOfType<MovementManager>().gameObject;
         spawner = FindObjectOfType<EnemySpawner>();
         cameraComponent.orthographicSize = cameraControllerData.targetSize;
-        AttributeManager.Instance.paused = true;
+        AttributeManager.Instance.SetPaused(true);
         showArena = true;
         InterfaceSystem.Instance.EnableLevelName();
+        InterfaceSystem.Instance.DisableInterface();
+        spawner?.DisableWaveText();
     }
 
     public void FollowPlayer()
@@ -41,11 +43,13 @@ public class CameraController : MonoBehaviour
                 InterfaceSystem.Instance.SetAlphaLevelName(cameraComponent.orthographicSize / cameraControllerData.targetSize);
                 cameraComponent.orthographicSize -= cameraControllerData.incrementValue;
             }
-            else { 
+            else {
+                InterfaceSystem.Instance.EnableInterface();
                 showArena = false; 
                 followPlayer = true; 
                 spawner?.StartSpawner();
-                AttributeManager.Instance.paused = false;
+                spawner?.EnableWaveText();
+                AttributeManager.Instance.SetPaused(false);
             }
         }
 
@@ -60,6 +64,34 @@ public class CameraController : MonoBehaviour
             // transform.position = Vector3.MoveTowards(transform.position, new Vector3(targetX, targetY, this.transform.position.z), step);
             transform.position = Vector3.SmoothDamp(transform.position, target.transform.position, ref currentVelocity, 0.1f);
         }    
+    }
+
+    public void Shake(float duration, float magnitude)
+    {
+        StartCoroutine(ShakeAction(duration, magnitude));
+    }
+
+    private IEnumerator ShakeAction(float duration, float magnitude)
+    {
+        Vector3 originalPosition = transform.position;
+        followPlayer = false;
+        float elapsed = 0.0f;
+        while (elapsed < duration)
+        {
+            float x = Random.Range(-1f, 1f) * magnitude;
+            float y = Random.Range(-1f, 1f) * magnitude;
+
+            transform.position = new Vector3(originalPosition.x + x, originalPosition.y + y, originalPosition.z);
+
+            elapsed += Time.deltaTime;
+
+            yield return null;
+        }
+        transform.position = originalPosition;
+        followPlayer = true;
+        // StartCoroutine(cameraShake.Shake(.15f, .4f));
+        // CameraShaker.Instance.ShakeOnce(4f,4f,.1f,1f);
+        // Ez Camera Shake
     }
 
 }

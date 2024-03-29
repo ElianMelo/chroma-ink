@@ -30,6 +30,16 @@ public class EnemySpawner : MonoBehaviour
         waveText.text = $"Wave {currentWave} - {enemiesKilled} / {waveEnemyQty}";
     }
 
+    public void DisableWaveText()
+    {
+        waveText.gameObject.SetActive(false);
+    }
+
+    public void EnableWaveText()
+    {
+        waveText.gameObject.SetActive(true);
+    }
+
     public void StartSpawner() {
         InvokeRepeating("InvokeEnemy", 0f, enemySpawnerData.spawnRate);
     }
